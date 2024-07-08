@@ -1,0 +1,8 @@
+When you start to work with different versions of stuff,
+ its best to use a virtual env so you can download from a fresh start rather
+  than trying to configure your machine with everything
+
+If you run the following code it will activatte and you should see (eagleaiENV)
+  at the start of your terminal lines
+
+  source eagleaiENV/bin/activate
