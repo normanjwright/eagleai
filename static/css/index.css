@@ -1,0 +1,41 @@
+.container-fluid {
+    height: 100vh;
+    background-color: #FFFFFF; /* Keeping the background white for contrast */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.container-fluid > div {
+    width: 85%;
+    min-width: 300px;
+    max-width: 500px;
+}
+
+.card{
+    width: 100%;
+    background-color: #8C2633; /* Boston College Maroon */
+    color: #FFF; /* White text color for readability */
+    border: 1px solid #FFC72C; /* Adding a border with Boston College Gold */
+}
+
+.social-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.btn a, .btn a:hover {
+    color: #FFC72C; /* Boston College Gold for button text */
+    text-decoration: none;
+    background-color: #8C2633; /* Boston College Maroon for button background */
+    border: 1px solid #FFC72C; /* Border with Boston College Gold */
+    padding: 10px;
+    border-radius: 5px; /* Rounded corners for buttons */
+    transition: background-color 0.3s ease; /* Smooth transition for hover effect */
+}
+
+.btn a:hover {
+    background-color: #FFC72C; /* Change to gold on hover */
+    color: #8C2633; /* Change text to maroon on hover */
+}
