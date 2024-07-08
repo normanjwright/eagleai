@@ -19,26 +19,27 @@
   
   .navbar-brand{ 
     color: #FFF;
-    font-size: 40px;
+    font-size: 32px;
     font-style: normal;
+    font-family: 'Open Sans', Times, serif;
   }
   
   .nav-item {
-    color: #FFF;
+    color: #000000;
     border-radius: 5px;
-    border: .5px solid rgba(0, 0, 0, 10);
-    background: #726158;
+    border: 1.5px solid rgba(0, 0, 0, 10);
+    background: #dccaa0;
     box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.05);
     display: flex;
     justify-content: center;
     align-items: center;
     gap: 10px;
     padding: 1px 5px;
-    margin
   }
   .nav-link{
-    color: #000000B2;
-    background: #726158;
+    color: #000000;
+    background: #dccaa0;
+
   }
   
   /* Style The Dropdown Button */
