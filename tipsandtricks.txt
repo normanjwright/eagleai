@@ -6,3 +6,9 @@ If you run the following code it will activatte and you should see (eagleaiENV)
   at the start of your terminal lines
 
   source eagleaiENV/bin/activate
+
+
+For git commit in a virtual environment, it attempts to call VIM so instead do 
+  git commit -m 'MESSAGE'
+
+  

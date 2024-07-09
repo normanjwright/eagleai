@@ -9,6 +9,16 @@
     width: 50%;
     padding: 10px;
     align-items: center;
+    font-family: 'Open Sans',sans-serif
+  }
+
+  h3 {
+    margin: auto;
+    width: 80%;
+    padding: 5px;
+    align-items: center;
+    font-family: 'Open Sans',sans-serif
+
   }
   
   .navbar {
@@ -132,4 +142,49 @@
   .custom-bg-color {
     background-color: #86ff92;
   }
+
+  .bg-image {
+    position: relative;
+    top: 230px;
+    height: 270px;
+    /* background-image: url(../image/stainedglass.jpg); */
+    background-color: #73131d;
+    background-size: cover;
+    left: 0;
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 100%;
+    z-index: -1;
+}
+
+
+  .login {
+    border-radius: 2px;
+    box-shadow: 0 12px 16px 0 rgba(0, 0, 0, .2), 0 16px 48px 0 rgba(0, 0, 0, .15), 0 0 0 1px rgba(0, 0, 0, .05);
+    max-width: 448px;
+}
+
+.login, .signup {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -ms-box-sizing: border-box;
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 400px;
+  margin: 0 auto;
+  padding: 30px 40px;
+  background: #ffffff;
+  -webkit-border-radius: 0;
+  -moz-border-radius: 0;
+  border-radius: 0;
+  -webkit-box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.05), 0 0 0px 0 rgba(0, 0, 0, 0.1);
+  -moz-box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.05), 0 0 0px 0 rgba(0, 0, 0, 0.1);
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.05), 0 0 0px 0 rgba(0, 0, 0, 0.1);
+}
+
+section {
+  display: block;
+  unicode-bidi: isolate;
+}
   
