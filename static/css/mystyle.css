@@ -21,7 +21,7 @@
     color: #FFF;
     font-size: 32px;
     font-style: normal;
-    font-family: 'Open Sans', Times, serif;
+    font-family: 'Open Sans', sans-serif;
   }
   
   .nav-item {
@@ -39,7 +39,11 @@
   .nav-link{
     color: #000000;
     background: #dccaa0;
+    font-family: 'Open Sans',sans-serif;
 
+  }
+  .btn {
+    font-family: 'Open Sans',sans-serif;
   }
   
   /* Style The Dropdown Button */

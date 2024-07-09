@@ -16,29 +16,39 @@
       <nav class="navbar navbar-expand-lg navbar-light bg-body-tertiary" >
         <div class="container-fluid">
                 
-          <a class="navbar-brand text-center mx-3 my-auto" style="color: #FFF" href="/">EagleAI</a>
+          <a class="navbar-brand text-center mx-auto my-auto" style="color: #FFF" href="/">EagleAI</a>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
           </button>
 
           <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <ul class="navbar-nav mx-auto mb-2 mb-lg-0">
               
                 <li class="nav-item active mx-5">
-                    <a class="nav-link" href="#">Progress Bars</a>
+                    <a class="nav-link" href="{{ url_for('home') }}">Progress Bars</a>
                   </li>
                 <li class="nav-item active mx-5">
-                    <a class="nav-link" href="#">AI Boosted Course Search</a>
+                    <a class="nav-link" href="{{ url_for('coursesearch') }}">AI Boosted Course Search</a>
                   </li>
                   <li class="nav-item active mx-5">
-                    <a class="nav-link" href="#">Ask Baldwin</a>
+                    <a class="nav-link" href="{{ url_for('askbaldwin') }}">Ask Baldwin</a>
                   </li>
               
             
             </ul>
           </div>
-
+        
           <ul class="navbar-nav navbar-right me-auto mb-2 mb-lg-0">
+            <li class="nav-item active mx-2" style="background-color: #726158;">
+                <a class="nav-link" style="background-color: #726158; color: #c5bfb0;" href="{{ url_for('profile') }}">Profile</a>
+              </li>
+              <li class="nav-item active mx-2" style="background-color: #726158;">
+                <a class="nav-link" style="background-color: #726158; color: #c5bfb0;" href="{{ url_for('login') }}">Logout</a>
+              </li>
+
+
+
+            <!--
             <div class="dropdown collapse navbar-collapse" id="navbarNavDropdown">
                 <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                   Profile
@@ -48,6 +58,7 @@
                   <a class="dropdown-item" href="#">Logout</a>
                 </div>
               </div>
+            -->
         </ul>
         
           </li>
