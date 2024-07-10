@@ -1,1 +1,3 @@
 eagleaiENV/
+__pycache__
+*.pyc

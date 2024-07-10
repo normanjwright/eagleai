@@ -1,4 +1,5 @@
 from flask import Flask, render_template
+from loadclasses import get_all_courses
 
 app = Flask(__name__)
 
@@ -21,6 +22,13 @@ def profile():
 @app.route("/login")
 def login():
     return render_template("login.html")
+
+# Here we reference the function in load classes, 
+# where courses is a list of objects of the type ApiCourse which is also defined there
+courses = get_all_courses()
+
+print(courses[100].title)
+
 
     
 if __name__ == "__main__":
