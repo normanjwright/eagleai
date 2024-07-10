@@ -50,7 +50,7 @@ def format_courses(courses):
 def get_all_courses():
     courses = []
     try:
-        courses = requests.get(f"http://localhost:8080/planning/planningcourses")
+        courses = requests.get(f"http://localhost:8080/waitlist/planningcourses")
     except:
         return []
     return format_courses(courses)
