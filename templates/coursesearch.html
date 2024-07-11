@@ -1,5 +1,41 @@
 {% extends 'base.html' %} 
-{% block title %}EagleAI{% endblock %} 
+{% block title %}Course Search+{% endblock %} 
 {% block content %} 
-    <div class="container-fluid" style="background-color: 8a100b;">Course Search</p>
+    <div class="container-fluid" style="background-color: 8a100b;">Course Search</div>
+    <!-- We need to setup the form here-->
+
+    <div class="container-fluid">
+        <div class="row mt-3">
+            <div class="col-6 mb-4 mx-auto">
+    <!-- Here is where we can output the formatted cards. Inside we include the modal window(more info option)-->
+    {% for course in CSCI_courses %}
+        
+    <div class="card border-secondary my-2 w-300" >
+        <div class="card-header">
+            <div class="row">
+                <div class="col-4 my-auto">
+                    Class Code: {{course.code}}
+                </div>
+                <div class="col-2 my-auto">
+                    Credits: {{ course.credits }}
+                </div>
+                <div class="col-4 my-auto">
+                    Prerequisites: {{ course.prerequisites }}
+                </div>
+            </div>
+        </div>
+        <div class="card-body text-secondary">
+          <h5 class="card-title">{{ course.title }}</h5>
+          <p class="card-text">{{ course.description }}</p>
+        </div>
+    </div>
+
+    {% endfor %}
+
+    </div>
+    </div>
+    </div>
+        
+
+
 {% endblock %}

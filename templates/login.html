@@ -10,7 +10,32 @@
     </head>
 
 
-<body>
-    <h1>Login</h1>
+<body style="background-color: #eaeaea;">
+    <div class="container-fluid">
+        <div class="top" style="background-color: #73131d; height: 140px; display: block;
+        unicode-bidi: isolate;">
+
+        <div class="bg-image"></div>
+    </div>
+
+        <section class="login">
+            <h3 class="">Sign in to continue</h3>
+            <form class="row mx-auto g-3">
+                <div class="col-auto mx-auto my-1">
+                    <input type="text" class="form-control" id="inputUsername" placeholder="Username">
+                </div>
+                <div class="col-auto mx-auto my-1">
+                  <input type="password" class="form-control" id="inputPassword" placeholder="Password">
+                </div>
+                <div class="col-auto mx-auto my-auto">
+                  <button type="submit" class="btn btn-primary mb-3 my-3" style="background-color: #73131d;">Sign In</button>
+                  <a class="nav-link" href="{{ url_for('home') }}">Fake Login</a>
+                </div>
+              </form>
+
+
+
+        </section>
+    </div>
 
 </body>
