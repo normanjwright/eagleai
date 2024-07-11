@@ -10,8 +10,24 @@ class ApiCourse():
             self.credits = int(credits[0][-3])
         except:
             self.credits = 0
-        self.prerequisites = prerequisites if prerequisites else [["None"]]
+        self.prerequisites = prerequisites if prerequisites else "None"
+
+
+
         
+def prerequisites_as_string(prereqs):
+        output = ""
+        if len(prereqs) == 0:
+            output = "None"
+        elif len(prereqs) == 1:
+            
+            output = str(prereqs[0][0])
+        else:
+            for prereq in prereqs:
+                output = output + str(prereq[0]) + " and "
+            output = output[:-5]
+
+        return output
 
 def find_prerequisites(text, course_code):
     # this return a list of lists [[prereq_1], [prereq_2], [prereq_3a, prereq_3b], ...]
@@ -28,23 +44,26 @@ def find_prerequisites(text, course_code):
 
 def format_courses(courses):
     formatted = []
-    i = 0
+    #i = 0
     for course in courses.json():
         prerequisites = None
+        prereq_string = None
         if len(course['prereqTerseTranslations']) > 0:
             prerequisites = find_prerequisites(course['prereqTerseTranslations'][0]['translation']['formatted'], course['course']['courseCode'])
+            #print(type(prerequisites))
+            prereq_string = prerequisites_as_string(prerequisites)
         formatted.append(ApiCourse(
             course['course']['title'],
             course['course']['courseCode'],
             course['course']['id'],
             course['course']['descr']['plain'],
             course['course']['creditOptionIds'],
-            prerequisites
+            prereq_string
         ))
-        if (i % 1000 == 0):
-            print(str(i) + ": " + course['course']['title'])
-        i += 1
-    print(i)
+        #if (i % 1000 == 0):
+            #print(str(i) + ": " + course['course']['title'])
+        #i += 1
+    #print(i)
     return formatted
 
 def get_all_courses():

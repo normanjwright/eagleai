@@ -11,7 +11,7 @@ def home():
 def coursesearch():
     CSCI_courses = []
     for course in courses:
-        if course.code[0:4] == "CSCI":
+        if course.code[0:4] == "CSCI" and course.credits > 0:
             CSCI_courses.append(course)
         
     
@@ -31,9 +31,9 @@ def login():
 
 # Here we reference the function in load classes, 
 # where courses is a list of objects of the type ApiCourse which is also defined there
+
 courses = get_all_courses()
 
-print(courses[100].title)
 
 
     
