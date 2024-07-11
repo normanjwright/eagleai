@@ -1,5 +1,15 @@
 {% extends 'base.html' %} 
 {% block title %}Course Search+{% endblock %} 
 {% block content %} 
-    <div class="container-fluid" style="background-color: 8a100b;">Course Search</p>
+    <div class="container-fluid" style="background-color: 8a100b;">Course Search</div>
+
+    {% for course in CSCI_courses %}
+        
+        <li> {{course.title}}</li>
+
+    {% endfor %}
+
+        
+
+
 {% endblock %}

@@ -1,4 +1,4 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, url_for, request
 from loadclasses import get_all_courses
 
 app = Flask(__name__)
@@ -9,7 +9,13 @@ def home():
     
 @app.route("/coursesearch")
 def coursesearch():
-    return render_template("coursesearch.html")
+    CSCI_courses = []
+    for course in courses:
+        if course.code[0:4] == "CSCI":
+            CSCI_courses.append(course)
+        
+    
+    return render_template("coursesearch.html", CSCI_courses = CSCI_courses)
 
 @app.route("/askbaldwin")
 def askbaldwin():
