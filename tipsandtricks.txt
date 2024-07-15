@@ -12,3 +12,4 @@ For git commit in a virtual environment, it attempts to call VIM so instead do
   git commit -m 'MESSAGE'
 
     
+Running the waitlist app:  java -jar waitlist-app-0.6.6.jar
