@@ -30,20 +30,6 @@ def prerequisites_as_string(prereqs):
 
         return output
 
-def corereqs_as_string(corereqs):
-        output = ""
-        if len(corereqs) == 0:
-            output = "None"
-        elif len(corereqs) == 1:
-            
-            output = str(corereqs[0])
-        else:
-            for req in corereqs:
-                output = output + str(req) + " and "
-            output = output[:-5]
-
-        return output
-
 def find_prerequisites(text, course_code):
     # this return a list of lists [[prereq_1], [prereq_2], [prereq_3a, prereq_3b], ...]
     # the inside list with multiple items means the prereq can be satisfied in multiple ways
@@ -58,9 +44,8 @@ def find_prerequisites(text, course_code):
 
 def get_core_reqs(course):
     reqs = []
-    for req in (course['requirements']):
-        reqs.append(req['name'])
-    return reqs
+    for req in course['requirements']:
+        reqs.append(req["name"])
         
 
 def format_courses(courses):
@@ -73,16 +58,10 @@ def format_courses(courses):
             prerequisites = find_prerequisites(course['prereqTerseTranslations'][0]['translation']['formatted'], course['course']['courseCode'])
             #print(type(prerequisites))
             prereq_string = prerequisites_as_string(prerequisites)
-        core_req = corereqs_as_string(get_core_reqs(course))
-        formatted.append(ApiCourse(
-            course['course']['title'],
-            course['course']['courseCode'],
-            course['course']['id'],
-            course['course']['descr']['plain'],
-            course['course']['creditOptionIds'],
-            core_req,
-            prereq_string
-        ))
+        core_req = get_core_reqs(course)
+        print(len(course["requirements"]))
+        return formatted
+       
         #if (i % 1000 == 0):
             #print(str(i) + ": " + course['course']['title'])
         #i += 1
@@ -98,3 +77,4 @@ def get_all_courses():
     return format_courses(courses)
 
 
+yello = get_all_courses()
