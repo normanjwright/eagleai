@@ -1,18 +1,23 @@
 from flask import Flask, render_template, url_for, request
 from loadclasses import get_all_courses
+from searchcourses import search_courses
 
 app = Flask(__name__)
 
-@app.route("/")
+@app.route("/", )
 def home():
     return render_template("home.html")
     
 @app.route("/coursesearch")
 def coursesearch():
-    CSCI_courses = []
-    for course in courses:
-        if course.code[0:4] == "CSCI" and course.credits > 0:
-            CSCI_courses.append(course)
+    offering = True
+    CSCI_courses = search_courses(courses, "Artificial Intelligence", "CSCI",offering, offering )
+    
+    
+
+    #for course in courses:
+    #    if course.code[0:4] == "CSCI" and course.credits > 0:
+    #        CSCI_courses.append(course)
         
     
     return render_template("coursesearch.html", CSCI_courses = CSCI_courses)
