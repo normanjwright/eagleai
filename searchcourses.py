@@ -6,10 +6,11 @@ def search_courses(courses, search_text, dept, curr_offered, core_req):
         #Check Dept
         if course.code[0:4] == dept or dept == "Any":
             #check text
-            if search_text == "":
+            if search_text == "" or search_text.casefold() in course.title.casefold() \
+                or search_text.casefold() in course.description.casefold() \
+                or search_text in course.code:
                 return_courses.append(course)
-            elif search_text.casefold() in course.title.casefold() or search_text.casefold() in course.description.casefold():
-                return_courses.append(course)
+            
 
 
     return return_courses
