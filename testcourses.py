@@ -50,17 +50,23 @@ def get_core_reqs(course):
 
 def format_courses(courses):
     formatted = []
-    #i = 0
+    i = 0
     for course in courses.json():
         prerequisites = None
         prereq_string = None
+        [print(f"{key}: {value}") for key, value in course.items()]
+        i += 1
+        if i == 3:
+            return formatted
+
+
         if len(course['prereqTerseTranslations']) > 0:
             prerequisites = find_prerequisites(course['prereqTerseTranslations'][0]['translation']['formatted'], course['course']['courseCode'])
             #print(type(prerequisites))
             prereq_string = prerequisites_as_string(prerequisites)
         core_req = get_core_reqs(course)
         print(len(course["requirements"]))
-        return formatted
+
        
         #if (i % 1000 == 0):
             #print(str(i) + ": " + course['course']['title'])
