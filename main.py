@@ -11,7 +11,7 @@ def home():
 @app.route("/coursesearch")
 def coursesearch():
     offering = True
-    CSCI_courses = search_courses(courses, "", "AADS",offering, offering )
+    CSCI_courses = search_courses(courses, "", "AADS",offering, "Cultural Diversity" )
     
     
 
