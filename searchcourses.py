@@ -4,7 +4,7 @@ def search_courses(courses, search_text, dept, curr_offered, core_req):
     return_courses = []
     for course in courses:
         #Check Dept and core req
-        if (dept in courses[course].code[0:4] or dept == "Department") and (core_req in courses[course].program_reqs or core_req == "Any"):
+        if (dept in courses[course].code[0:4] or dept == "Department" or dept == "") and (core_req in courses[course].program_reqs or core_req == "Requirement"):
             #check text
             if search_text == "" or search_text.casefold() in str(course.title).casefold() \
                 or search_text.casefold() in courses[course].description.casefold() \
@@ -24,10 +24,8 @@ def find_all_departments():
 
 def find_all_reqs():
     # Should these be hard coded since they are the main bc cores
-    reqs = ["History I", "History II", "Cultural Diversity",\
-             "Mathematics", "Minor Requirements", "Major Requirements", \
-                "Social Science", "Natural Science", "Philosophy", "Theology", "Writing",\
-                    "Literature", "Arts"  ]
+    reqs = ["Major Requirements", "Minor Requirements", "Arts", "Cultural Diversity", "History I", "History II",\
+            "Literature", "Mathematics", "Natural Science", "Philosophy","Social Science", "Theology", "Writing" ]
     return reqs
 
 
