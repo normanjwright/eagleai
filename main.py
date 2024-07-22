@@ -11,7 +11,7 @@ def home():
 @app.route("/coursesearch")
 def coursesearch():
     offering = True
-    CSCI_courses = search_courses(courses, "", "AADS",offering, offering )
+    CSCI_courses = search_courses(courses, "", "CSCI",offering, "" )
     
     
 
@@ -20,7 +20,7 @@ def coursesearch():
     #        CSCI_courses.append(course)
         
     
-    return render_template("coursesearch.html", CSCI_courses = CSCI_courses)
+    return render_template("coursesearch.html", CSCI_courses = CSCI_courses , departments=departments)
 
 @app.route("/askbaldwin")
 def askbaldwin():
@@ -37,7 +37,9 @@ def login():
 # Here we reference the function in load classes, 
 # where courses is a list of objects of the type ApiCourse which is also defined there
 
-courses = get_all_courses()
+courses, departments = get_all_courses()
+
+print(departments)
 
 
 
