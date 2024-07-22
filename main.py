@@ -62,6 +62,9 @@ def profile():
 def login():
     return render_template("login.html")
 
+
+
+
 # Here we reference the function in load classes, 
 # where courses is a list of objects of the type ApiCourse which is also defined there
 
