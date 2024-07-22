@@ -65,6 +65,7 @@ def get_core_reqs(course):
 
 def format_courses(courses):
     formatted = []
+    depts = []
     #i = 0
     for course in courses.json():
         prerequisites = None
@@ -83,11 +84,14 @@ def format_courses(courses):
             core_req,
             prereq_string
         ))
+        dept = course['course']['courseCode'][0:4]
+        if dept not in depts and course['course']['levelValueId'] == 'kuali.result.value.course.level.UG':
+            depts.append(dept)
         #if (i % 1000 == 0):
             #print(str(i) + ": " + course['course']['title'])
         #i += 1
     #print(i)
-    return formatted
+    return formatted, depts
 
 def get_all_courses():
     courses = []
