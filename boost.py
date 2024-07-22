@@ -75,7 +75,7 @@ def boost_card(student, course):
     # {"role": "assistant", "content": assistant_content } 
     messages = [
         {"role": "system", "content": system_message},
-        {"role": "user", "content": f"{delimiter}{user_input}{delimiter}"},
+        {"role": "user", "content": f"{delimiter}{input}{delimiter}"},
     ]
 
     final_response = get_completion_from_messages(messages)
