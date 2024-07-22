@@ -8,19 +8,20 @@ app = Flask(__name__)
 def home():
     return render_template("home.html")
     
-@app.route("/coursesearch")
+@app.route("/coursesearch", methods=['GET', 'POST'])
 def coursesearch():
+    #temp
     offering = True
-    CSCI_courses = search_courses(courses, "", "CSCI",offering, "" )
-    
-    
+    search_text = ""
+    search_dept = "Department"
 
-    #for course in courses:
-    #    if course.code[0:4] == "CSCI" and course.credits > 0:
-    #        CSCI_courses.append(course)
-        
+    if request.method == 'POST':
+            search_text = request.form['searchText']
+            search_dept = request.form['searchDept']
     
-    return render_template("coursesearch.html", CSCI_courses = CSCI_courses , departments=departments)
+    searched_courses = search_courses(courses, str(search_text), str(search_dept[0:4]) ,offering, "" )
+  
+    return render_template("coursesearch.html", searched_courses = searched_courses , departments=departments, search_text=search_text, search_dept=search_dept)
 
 @app.route("/askbaldwin")
 def askbaldwin():
@@ -39,7 +40,7 @@ def login():
 
 courses, departments = get_all_courses()
 
-print(departments)
+print(departments[0])
 
 
 

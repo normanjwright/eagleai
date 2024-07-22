@@ -28,7 +28,7 @@ def boost_card(student, course):
     class_prereqs = course.prerequisites
 
     student_year = student.grad
-
+    student_school = student.year
 
     # Set system message to help set appropriate tone and context for model
     system_message = f"""
