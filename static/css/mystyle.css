@@ -56,6 +56,11 @@
     font-family: 'Open Sans',sans-serif;
   }
   
+  .btn-red{
+    background: #8a100b;
+    color: #fff;
+  }
+  
   /* Style The Dropdown Button */
   .dropbtn {
     background-color: #4CAF50;
