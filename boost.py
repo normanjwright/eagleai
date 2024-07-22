@@ -11,7 +11,7 @@ def get_completion_from_messages(messages, model="gpt-3.5-turbo-0613", temperatu
     max_tokens=max_tokens)
     return response.choices[0].message.content
 
-
+#test
 
 ## Define a Prompt for the LLM
 
@@ -26,6 +26,8 @@ def boost_card(student, course):
     class_desc = course.description
     class_credit = course.credits
     class_prereqs = course.prerequisites
+
+    student_year = student.grad
 
 
     # Set system message to help set appropriate tone and context for model
@@ -55,7 +57,7 @@ def boost_card(student, course):
             Credit: {class_credit}
 
             ## Student Information
-            Year: Freshman
+            Year: {student_year}
             Semester: 1
             School: Morissey College of Arts and Sciences
             Program: Bachelor of Science in Computer Science
