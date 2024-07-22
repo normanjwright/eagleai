@@ -64,7 +64,7 @@ def get_core_reqs(course):
         
 
 def format_courses(courses):
-    formatted = []
+    formatted = {}
     depts = []
     depts_long = []
     #i = 0
@@ -76,7 +76,7 @@ def format_courses(courses):
             #print(type(prerequisites))
             prereq_string = prerequisites_as_string(prerequisites)
         core_req = corereqs_as_string(get_core_reqs(course))
-        formatted.append(ApiCourse(
+        formatted.update({str(course['course']['courseCode']): ApiCourse(
             course['course']['title'],
             course['course']['courseCode'],
             course['course']['id'],
@@ -84,7 +84,7 @@ def format_courses(courses):
             course['course']['creditOptionIds'],
             core_req,
             prereq_string
-        ))
+        )})
         dept = str(course['course']['courseCode'][0:4])
         if dept not in depts and (course['course']['levelValueId'] == 'kuali.result.value.course.level.UG' or course['course']['levelValueId'] == 'kuali.result.value.course.level.B') :
             depts.append(dept) 

@@ -15,17 +15,18 @@ def get_completion_from_messages(messages, model="gpt-3.5-turbo-0613", temperatu
 
 ## Define a Prompt for the LLM
 
-class_name = "Computer Science 1"
-class_code = "CSCI1101"
-class_desc = "Satisfies Core requirement for Mathematics for CSCI1101 and CSCI1103. This course is an introduction to the art and science of computer programming and to some of the fundamental concepts of computer science. Students will write programs in the Python programming language. Good program design methodology will be stressed throughout. There will also be a study of some of the basic notions of computer science, including computer systems organization, files and some algorithms of fundamental importance."
-class_credit = 3
-class_prereqs = "None"
 
 
 
 
 def boost_card(student, course):
     delimiter = "```"
+    class_name = course.title
+    class_code = course.code
+    class_desc = course.description
+    class_credit = course.credits
+    class_prereqs = course.prerequisites
+
 
     # Set system message to help set appropriate tone and context for model
     system_message = f"""

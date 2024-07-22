@@ -8,9 +8,9 @@
         <input type="text" placeholder="Search..">
         <button  class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">Department</button>
         <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-            <li><a class="dropdown-item" href="#">CSCI</a></li>
-            <li><a class="dropdown-item" href="#">MATH</a></li>
-            <li><a class="dropdown-item" href="#">MFIN</a></li>
+            {% for dept in departments %}
+            <li><a class="dropdown-item" href="#">{{ dept }}</a></li>
+            {% endfor %}
         </ul>
         <button class="button" onclick="performSearch()">Search</button>
       </div>

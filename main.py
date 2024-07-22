@@ -11,7 +11,7 @@ def home():
 @app.route("/coursesearch")
 def coursesearch():
     offering = True
-    CSCI_courses = search_courses(courses, "", "MCCH",offering, "" )
+    CSCI_courses = search_courses(courses, "", "CSCI",offering, "" )
     
     
 
@@ -20,7 +20,7 @@ def coursesearch():
     #        CSCI_courses.append(course)
         
     
-    return render_template("coursesearch.html", CSCI_courses = CSCI_courses)
+    return render_template("coursesearch.html", CSCI_courses = CSCI_courses , departments=departments)
 
 @app.route("/askbaldwin")
 def askbaldwin():
