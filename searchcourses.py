@@ -1,10 +1,11 @@
 #helper functions for the search courses page 
 
-def search_courses(courses, search_text, dept, curr_offered, core_req):
+def search_courses(courses, search_text, dept, curr_offered, core_req, search_credit):
     return_courses = []
     for course in courses:
         #Check Dept and core req
-        if (dept in courses[course].code[0:4] or dept == "Depa" or dept == "") and (core_req in courses[course].program_reqs or core_req == "Requirement"):
+        if (dept in courses[course].code[0:4] or dept == "Depa" or dept == "") and (core_req in courses[course].program_reqs or core_req == "Requirement") \
+            and (search_credit == "Credit" or search_credit == str(courses[course].credits) or courses[course].credits >= 5) and (courses[course].credits > 0):
             #check text
             if search_text == "" or search_text.casefold() in str(course.title).casefold() \
                 or search_text.casefold() in courses[course].description.casefold() \

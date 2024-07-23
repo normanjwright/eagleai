@@ -30,6 +30,36 @@
                     <option>{{ req }}</option>
                 {% endfor %}
             </select>
+            <select id="searchCredit" name="searchCredit" class="form-select mx-2 nav-item" style="max-height: 70vh; overflow:scroll;max-width:125px;">
+                {% if search_cred != "Credit" %}
+                <option selected>{{ search_cred }}</option>
+                <option>Credit</option>
+                {% else %}
+                <option selected>Credit</option>
+                {% endif %}
+
+                {% if search_cred != "1" %}
+                <option>1</option>
+                {% endif %}
+
+                {% if search_cred != "2" %}
+                <option>2</option>
+                {% endif %}
+
+                {% if search_cred != "3" %}
+                <option>3</option>
+                {% endif %}
+
+                {% if search_cred != "4" %}
+                <option>4</option>
+                {% endif %}
+
+                {% if search_cred != "5+" %}
+                <option>5+</option>
+                {% endif %}
+
+
+            </select>
                 
             <input type="submit" class= "btn-red btn mx-auto" value="Search">
         </form>
@@ -55,10 +85,10 @@
                 <div class="col-7 my-auto">
                     Program Reqs: {{ course.program_reqs }}
                 </div>
-                <div class="col-4 my-auto">
+                <div class="col-5 my-auto">
                     Credits: {{ course.credits }}
                 </div>
-                <div class="col-4 my-auto">
+                <div class="col-7 my-auto">
                     Prerequisites: {{ course.prerequisites }}
                 </div>
                 
