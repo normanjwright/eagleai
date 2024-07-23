@@ -40,37 +40,40 @@
       {% endif %}
 
     <div class="container-fluid">
-        <div class="row mt-3">
-            <div class="col-6 mb-4 mx-auto">
+        <div class="row mt-3 mx-5">
+            
     <!-- Here is where we can output the formatted cards. Inside we include the modal window(more info option)-->
     {% for course in searched_courses %}
+    <div class="col-6 mb-4 mx-auto">
         
-    <div class="card border-secondary my-2 w-300" >
+    <div class="card border-secondary my-2 w-200" >
         <div class="card-header">
             <div class="row">
-                <div class="col-4 my-auto">
+                <div class="col-5 my-auto">
                     Class Code: {{course.code}}
                 </div>
-                <div class="col-2 my-auto">
+                <div class="col-7 my-auto">
+                    Program Reqs: {{ course.program_reqs }}
+                </div>
+                <div class="col-4 my-auto">
                     Credits: {{ course.credits }}
                 </div>
                 <div class="col-4 my-auto">
                     Prerequisites: {{ course.prerequisites }}
                 </div>
-                <div class="col-4 my-auto">
-                    Program Reqs: {{ course.program_reqs }}
-                </div>
+                
             </div>
         </div>
         <div class="card-body text-secondary">
-          <h5 class="card-title">{{ course.title }}</h5>
+          <h4 class="card-title">{{ course.title }}</h4>
           <p class="card-text">{{ course.description }}</p>
         </div>
     </div>
+</div>
 
     {% endfor %}
 
-    </div>
+    
     </div>
     </div>
         

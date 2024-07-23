@@ -4,7 +4,7 @@ def search_courses(courses, search_text, dept, curr_offered, core_req):
     return_courses = []
     for course in courses:
         #Check Dept and core req
-        if (dept in courses[course].code[0:4] or dept == "Department" or dept == "") and (core_req in courses[course].program_reqs or core_req == "Requirement"):
+        if (dept in courses[course].code[0:4] or dept == "Depa" or dept == "") and (core_req in courses[course].program_reqs or core_req == "Requirement"):
             #check text
             if search_text == "" or search_text.casefold() in str(course.title).casefold() \
                 or search_text.casefold() in courses[course].description.casefold() \

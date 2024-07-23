@@ -20,6 +20,7 @@ def coursesearch():
             search_text = request.form['searchText']
             search_dept = request.form['searchDept']
             search_req = request.form['searchReq']
+
     
     searched_courses = search_courses(courses, str(search_text), str(search_dept[0:4]) ,offering, search_req)
   
