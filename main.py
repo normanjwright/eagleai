@@ -10,7 +10,6 @@ def home():
     
 @app.route("/coursesearch", methods=['GET', 'POST'])
 def coursesearch():
-    #temp
     offering = True
     search_text = ""
     search_dept = "Department"
