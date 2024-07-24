@@ -9,7 +9,7 @@ app = Flask(__name__)
 def home():
     return render_template("home.html")
     
-@app.route("/coursesearch", methods=['GET', 'POST'])
+@app.route("/coursesearch")
 def coursesearch():
     offering = True
     search_text = ""
@@ -29,15 +29,6 @@ def coursesearch():
     return render_template("coursesearch.html", searched_courses = searched_courses , departments=departments, \
                            search_text=search_text, search_dept=search_dept, requirements=requirements, \
                             search_req=search_req, search_cred=search_cred, num_courses=len(searched_courses))
-
-
-@app.route('/boost', methods=['POST'])
-def boost():
-    course_id = request.json['course_id']
-    print(courses[course_id].title)
-    additional_info = "Baldwin Says:\n      " + str(boost_card(student, courses[course_id]))  # Your function to get additional data
-    return jsonify({'additional_info': additional_info})
-
 
 @app.route("/askbaldwin")
 def askbaldwin():
