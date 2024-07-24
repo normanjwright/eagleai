@@ -191,7 +191,8 @@
   .container {
     display: flex;
     background-color: #FFFFFF;
-    border: 2px solid #f0f0f0; /* Fixed incorrect syntax */
+    border: 2px solid #f0f0f0; 
+    font-family: 'Open Sans',sans-serif
 }
 
 .box {
@@ -200,6 +201,7 @@
     padding: 40px;
     background-color: #FFFFFF;
     border: 2px solid #f0f0f0; 
+    font-family: 'Open Sans',sans-serif
 }
 
 .bottom-container {
@@ -209,6 +211,7 @@
     background-color: #FFFFFF;
     border: 2px solid #f0f0f0; 
     padding: 20px;
+    font-family: 'Open Sans',sans-serif
 }
 
 .bottom-box {
@@ -217,6 +220,7 @@
     padding: 20px;
     background-color: #FFFFFF;
     border: 2px solid #f0f0f0; 
+    font-family: 'Open Sans',sans-serif
 }
 
 .hr {
@@ -259,6 +263,15 @@ button:hover {
   background-color: #0056b3;
 }
 
+.btn-secondary {
+  background-color: #7A2323;
+  color: #fff;
+}
 
 
 
+
+.modal-xl {
+    width: 90%;
+   max-width:1200px;
+  }

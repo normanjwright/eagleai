@@ -113,7 +113,7 @@ def boost_card(student, course):
         {"role": "system", "content": system_message},
         {"role": "user", "content": f"{delimiter}{input}{delimiter}"},
     ]
-    print(input)
+    print("AI call")
     final_response = get_completion_from_messages(messages)
     return final_response
 
@@ -133,5 +133,5 @@ student = createStudent("Owen", "S",\
                 "Senior Fall": [], "Senior Spring": [],},\
             "Freshman", ["MATH1102: Calculus (Mathematics/Science Majors)"], "")
 
-courses, departments = get_all_courses()
-print(boost_card(student, courses["MUSA1100"]))
+#courses, departments = get_all_courses()
+#print(boost_card(student, courses["MUSA1100"]))

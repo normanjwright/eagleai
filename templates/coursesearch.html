@@ -61,7 +61,7 @@
 
             </select>
                 
-            <input type="submit" class= "btn-red btn mx-auto" value="Search">
+            <input type="submit" class= "btn-red btn mx-2" value="Search">
         </form>
       </div>
 
@@ -79,41 +79,87 @@
         
     <div class="card border-secondary my-2 w-200 h-100" >
         <div class="card-header">
-            <div class="row">
-                <div class="col-5 my-auto">
-                    Class Code: {{course.code}}
-                </div>
-                <div class="col-7 my-auto">
-                    Program Reqs: {{ course.program_reqs }}
-                </div>
-                <div class="col-5 my-auto">
-                    Credits: {{ course.credits }}
-                </div>
-                <div class="col-7 my-auto">
-                    Prerequisites: {{ course.prerequisites }}
-                </div>
-                
-            </div>
+            <h4 class="card-title my-auto"> {{course.code}}: {{ course.title }}</h4>
         </div>
         <div class="card-body text-secondary">
-          <h4 class="card-title">{{ course.title }}</h4>
+          
           <p class="card-text">{{ course.description|truncate(300) }}</p>
         </div>
-        <button type="button" class="btn-red btn" data-toggle="modal" data-target="#courseModal" data-course-id="{{ course.code }}">
+        <button type="button" class="btn-red btn" data-bs-toggle="modal" data-bs-target="#modal{{ loop.index }}" data-course-id="{{ course.code }}">
             More Info
           </button>
 
     </div>
-</div>
+    </div>
+
+    <div class="modal fade" id="modal{{ loop.index }}" tabindex="-1" aria-labelledby="exampleModalLabel{{ loop.index }}" aria-hidden="true">
+        <div class="modal-dialog modal-xl">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h4 class="modal-title fs-5 my-auto" id="exampleModalLabel{{ loop.index }}"> {{ course.title }}</h1>
+              <button type="button" class="btn-close btn-red" data-bs-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-5 my-auto">
+                        Class Code: {{course.code}}
+                    </div>
+                    <div class="col-7 my-auto">
+                        Program Reqs: {{ course.program_reqs }}
+                    </div>
+                    <div class="col-5 my-auto">
+                        Credits: {{ course.credits }}
+                    </div>
+                    <div class="col-7 my-auto">
+                        Prerequisites: {{ course.prerequisites }}
+                    </div>
+                </div>
+                <hr/>
+                <div class="row">
+                    <div class="col 5 mx-3">
+                        {{ course.description}}
+                    </div>
+                </div>
+                <hr/>
+                <p class="mx-auto" id="askbaldwin">Ask Baldwin Response</p>
+            </div>
+            
+          </div>
+        </div>
+      </div>
+      <!---
+      <script>
+            
+        $(document).ready(function() {
+            $('#modal{{ loop.index }}').on('show.bs.modal', function(event) {
+                var button = $(event.relatedTarget);
+                var courseId = button.data('course-id');
+
+                $.ajax({
+                    url: '/boost',  // Your Flask route for the boost function
+                    method: 'POST',
+                    data: JSON.stringify({ course_id: courseId }),
+                    contentType: 'application/json',
+                    success: function(data) {
+                        $('#course-additional-info').text(data.additional_info);
+                    },
+                    error: function(xhr, status, error) {
+                        console.error('Error fetching course data:', error);
+                    }
+                });
+            });
+        });
+    </script>
+
+      
 
     {% endfor %}
+    </div>
+    </div>
 
     
-    </div>
-    </div>
 
         
  
-
 
 {% endblock %}
