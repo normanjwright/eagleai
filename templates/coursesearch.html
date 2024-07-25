@@ -121,13 +121,14 @@
                     </div>
                 </div>
                 <hr/>
-                <p class="mx-auto" id="additional_info">Ask Baldwin Response</p>
+                <p class="mx-auto" id="additional_info"></p>
             </div>
             
           </div>
         </div>
       </div>
   
+      <!--
       <script>
             
         $(document).ready(function() {
@@ -142,6 +143,7 @@
                     contentType: 'application/json',
                     success: function(data) {
                         $('#course-additional-info').text(data.additional_info);
+                        $('#modal{{ loop.index }}').modal('show')
                         
                     },
                     error: function(xhr, status, error) {
@@ -151,9 +153,8 @@
             });
         });
     </script>
+    -->
 
-
-      
 
     {% endfor %}
     </div>
