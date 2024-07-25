@@ -30,7 +30,7 @@ def coursesearch():
                            search_text=search_text, search_dept=search_dept, requirements=requirements, \
                             search_req=search_req, search_cred=search_cred, num_courses=len(searched_courses))
 
-'''
+
 @app.route('/boost', methods=['POST'])
 def boost():
     course_id = request.json['course_id']
@@ -38,7 +38,7 @@ def boost():
     additional_info = boost_card(student, courses[course_id])  # Your function to get additional data
     print(additional_info)
     return jsonify({'additional_info': additional_info})
-'''
+
 
 @app.route("/askbaldwin")
 def askbaldwin():

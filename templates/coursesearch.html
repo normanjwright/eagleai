@@ -86,7 +86,7 @@
           <p class="card-text">{{ course.description|truncate(300) }}</p>
         </div>
 
-        <button type="button" class="btn-red btn" data-bs-toggle="modal" data-bs-target="#modal{{ loop.index }}">
+        <button type="button" class="btn-red btn" data-course-id="{{ course.code }}" data-bs-toggle="modal" data-bs-target="#modal{{ loop.index }}">
 
             More Info
           </button>
@@ -135,7 +135,6 @@
       </div>
 
   
-      <!--
       <script>
             
         $(document).ready(function() {
@@ -160,7 +159,7 @@
             });
         });
     </script>
-    -->
+
 
     {% endfor %}
     </div>

@@ -119,7 +119,7 @@ def boost_card(student, course):
 
 
 
-#Testing part: mocked for me after one semester at BC, no qual data yet
+# Testing part: mocked for me after one semester at BC, no qual data yet
 
 student = createStudent("Owen", "S",\
             "Morissey College of Arts and Science", \
