@@ -85,7 +85,9 @@
           
           <p class="card-text">{{ course.description|truncate(300) }}</p>
         </div>
-        <button type="button" class="btn-red btn"  data-course-id="{{ course.code }}">
+
+        <button type="button" class="btn-red btn" data-bs-toggle="modal" data-bs-target="#modal{{ loop.index }}">
+
             More Info
           </button>
 
@@ -97,7 +99,9 @@
           <div class="modal-content">
             <div class="modal-header">
               <h4 class="modal-title fs-5 my-auto" id="exampleModalLabel{{ loop.index }}"> {{ course.title }}</h1>
+
               <button type="button" class="btn-close btn-red" data-bs-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+
             </div>
             <div class="modal-body">
                 <div class="row">
@@ -121,12 +125,15 @@
                     </div>
                 </div>
                 <hr/>
+              
                 <p class="mx-auto" id="additional_info"></p>
+
             </div>
             
           </div>
         </div>
       </div>
+
   
       <!--
       <script>
@@ -154,7 +161,6 @@
         });
     </script>
     -->
-
 
     {% endfor %}
     </div>

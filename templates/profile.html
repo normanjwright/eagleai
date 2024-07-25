@@ -1,6 +1,9 @@
 {% extends 'base.html' %} 
 {% block title %}Profile{% endblock %} 
 {% block content %} 
+
+
+
     <div class="container-fluid" >
 
             <div class="container">
@@ -8,24 +11,57 @@
                     <h3>Student Name</h3>
                     <h5>Class Year</h5>
                     <h5>School at BC</h5>
-                    <a href="url">Link to Student Questionare</a>
+                    
                 </div>
                 <div class="box">
                     <h3>Programs</h3>
                     <ul>
-                        <li>Major #1</li>
-                        <li>Major #2</li>
-                        <li>Minor #1</li>
-                        <li>Minor #2</li>
+                        <select name="majors" id="majors">
+                            <option value="major">Major 1</option>
+                            <option value="1">MATH</option>
+                            <option value="2">CSCI</option>
+                            <option value="3">MFIN</option>
+                          </select>
+                          <select name="majors" id="majors">
+                            <option value="major">Major 2</option>
+                            <option value="1">MATH</option>
+                            <option value="2">CSCI</option>
+                            <option value="3">MFIN</option>
+                          </select>
+                          <select name="majors" id="majors">
+                            <option value="major">Minor 2</option>
+                            <option value="1">MATH</option>
+                            <option value="2">CSCI</option>
+                            <option value="3">MFIN</option>
+                          </select>
+                          <select name="majors" id="majors">
+                            <option value="major">Minor 2</option>
+                            <option value="1">MATH</option>
+                            <option value="2">CSCI</option>
+                            <option value="3">MFIN</option>
+                          </select>
                     </ul>
                 </div>
                 <div class="box">
                     <h3>What if?</h3>
-                    <div class="dropdown-center">
-                        <button class="btn btn-secondary dropdown-toggle mx-1" type="button" data-bs-toggle="dropdown" aria-expanded="false">Major</button><button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">Minor</button>
+                
+                        <select name="majors" id="majors">
+                            <option value="major">Major</option>
+                            <option value="1">MATH</option>
+                            <option value="2">CSCI</option>
+                            <option value="3">MFIN</option>
+                          </select>
+                          <select name="minors" id="minors">
+                            <option value="major">Minor</option>
+                            <option value="1">MATH</option>
+                            <option value="2">CSCI</option>
+                            <option value="3">MFIN</option>
+                          </select>
+                           
+                          <a href="url">Restore Declared Programs</a>
+                          <a href="url">Restore Classes Taken</a> 
                     </div>
-                    <a href="url">Restore Declared Programs</a>
-                    <a href="url">Restore Classes Taken</a>
+                    
                 </div>
             </div>
 
@@ -39,11 +75,11 @@
                     <button class="btn btn-secondary dropdown-toggle my-1" type="button" data-bs-toggle="dropdown" aria-expanded="false">Class 1</button> <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">Class 2</button>
                     <button class="btn btn-secondary dropdown-toggle my-1" type="button" data-bs-toggle="dropdown" aria-expanded="false">Class 3</button> <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">Class 4</button>
                     <button class="btn btn-secondary dropdown-toggle my-1" type="button" data-bs-toggle="dropdown" aria-expanded="false">Class 5</button> <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">Class 6</button>
-                   
-
-
-
                 </div>
+            
+                <!-- Button dropdowns -->
+
+                
                 <div class="bottom-box">
                     <h3>Sophomore Year</h3>
                     <button class="btn btn-secondary dropdown-toggle my-1" type="button" data-bs-toggle="dropdown" aria-expanded="false">Class 1</button> <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">Class 2</button>
