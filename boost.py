@@ -113,7 +113,6 @@ def boost_card(student, course):
         {"role": "system", "content": system_message},
         {"role": "user", "content": f"{delimiter}{input}{delimiter}"},
     ]
-    print("AI call")
     final_response = get_completion_from_messages(messages)
     return final_response
 

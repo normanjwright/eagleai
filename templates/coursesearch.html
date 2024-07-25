@@ -72,6 +72,22 @@
 
     <div class="container-fluid">
         <div class="row mt-3 mx-5">
+
+
+    <!-- Loading Indicator Modal -->
+<div class="modal fade" id="loadingModal" tabindex="-1" aria-labelledby="loadingModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-sm">
+      <div class="modal-content">
+        <div class="modal-body text-center">
+          <div class="spinner-border text-primary my-2" role="status">
+            <span class="visually-hidden popup">Generating AI Baldwin Reponse...</span>
+          </div>
+          <img src="./static/eagleAI.png" width="200" height="200" alt="EagleAI Mascot logo">
+          <p class="popup my-2">Please wait, this may take a second.</p>
+        </div>
+      </div>
+    </div>
+  </div>
             
     <!-- Here is where we can output the formatted cards. Inside we include the modal window(more info option)-->
     {% for course in searched_courses %}
@@ -86,7 +102,7 @@
           <p class="card-text">{{ course.description|truncate(300) }}</p>
         </div>
 
-        <button type="button" class="btn-red btn" data-course-id="{{ course.code }}" data-bs-toggle="modal" data-bs-target="#modal{{ loop.index }}">
+        <button type="button" class="btn-red btn" onclick="fetchCourseInfo('{{ course.code }}', '#modal{{ loop.index }}')">
 
             More Info
           </button>
@@ -126,7 +142,10 @@
                 </div>
                 <hr/>
               
-                <p class="mx-auto" id="additional_info"></p>
+                <div class="row">
+                <div class="col 5 mx-3 show-white-space" id="additional_info">
+                </div>
+            </div>
 
             </div>
             
@@ -137,27 +156,29 @@
 
       <script>
             
-        $(document).ready(function() {
-            $('#modal{{ loop.index }}').on('show.bs.modal', function(event) {
-                var button = $(event.relatedTarget);
-                var courseId = button.data('course-id');
-
+            function fetchCourseInfo(courseId, modalId) {
+                
+                $('#loadingModal').modal('show');
+                
                 $.ajax({
-                    url: '/boost',  // Your Flask route for the boost function
+                    url: '/boost',
                     method: 'POST',
                     data: JSON.stringify({ course_id: courseId }),
                     contentType: 'application/json',
                     success: function(data) {
-                        $('#course-additional-info').text(data.additional_info);
-                        $('#modal{{ loop.index }}').modal('show')
-                        
+                        $('#loadingModal').modal('hide');
+
+                        // Find the specific modal and update its content
+                        var modal = $(modalId);
+                        modal.find('#additional_info').text(data.additional_info);
+                        modal.modal('show');
                     },
                     error: function(xhr, status, error) {
+                        $('#loadingModal').modal('hide');
                         console.error('Error fetching course data:', error);
                     }
                 });
-            });
-        });
+            }
     </script>
 
 

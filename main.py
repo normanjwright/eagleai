@@ -35,8 +35,7 @@ def coursesearch():
 def boost():
     course_id = request.json['course_id']
     print(courses[course_id].title)
-    additional_info = boost_card(student, courses[course_id])  # Your function to get additional data
-    print(additional_info)
+    additional_info = "Baldwin Says:\n      " + str(boost_card(student, courses[course_id]))  # Your function to get additional data
     return jsonify({'additional_info': additional_info})
 
 
