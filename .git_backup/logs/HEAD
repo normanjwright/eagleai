@@ -1,0 +1,6 @@
+0000000000000000000000000000000000000000 5d84fa1de373521afae6ff9fbe6394439b4f08e1 jesseearuiz <jesseearuiz@AsusG14> 1721326285 -0400	clone: from https://github.com/normanjwright/eagleai.git
+5d84fa1de373521afae6ff9fbe6394439b4f08e1 a222fd665b006cff98a4a4fef558e99522e36ee6 jesseearuiz <jesseearuiz@AsusG14> 1721410639 -0400	pull: Fast-forward
+a222fd665b006cff98a4a4fef558e99522e36ee6 f19ce9d8d0de29bd270711e1cefe8ca388e6749a Jessee Ruiz <jesseearuiz@gmail.com> 1721657338 -0400	commit: First change
+f19ce9d8d0de29bd270711e1cefe8ca388e6749a f19ce9d8d0de29bd270711e1cefe8ca388e6749a Jessee Ruiz <jesseearuiz@gmail.com> 1721668293 -0400	checkout: moving from main to login-page
+f19ce9d8d0de29bd270711e1cefe8ca388e6749a af79edd4b1b7a6ca04d446d2ca0041ce4e35ddb5 Jessee Ruiz <jesseearuiz@gmail.com> 1721679211 -0400	commit: Progress on Login
+af79edd4b1b7a6ca04d446d2ca0041ce4e35ddb5 7d334c6a54352fd3069cbe7be5b82977574f90fd Jessee Ruiz <jesseearuiz@gmail.com> 1721760807 -0400	commit: Structural changes and DB

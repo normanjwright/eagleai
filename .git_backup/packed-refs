@@ -1,0 +1,13 @@
+# pack-refs with: peeled fully-peeled sorted 
+9617cc6336d11a9d33e160a9273995e3e0c06953 refs/remotes/origin/18-testing-course-search
+0bbb601c5857e40b5b27c5836855cdfdfed21c45 refs/remotes/origin/22-search-bar
+6849caeb81b34f8377d69b3631ec2dfe547320c3 refs/remotes/origin/23-search-courses-functions
+a54ca3979bb38ca4fcbbce3759a77649e5700828 refs/remotes/origin/3-owens-git-hw
+96818b78e4cb0b0e9b24245e1d24d292fc638942 refs/remotes/origin/5-course-suggestion-test-of-concept
+3fd53419e74d0f3438d1da500b5d7f359d9b1a1c refs/remotes/origin/6-marias-test
+6e335446aa9c4b834db0ada44cc7f73b87be625c refs/remotes/origin/7-teddys-test
+6e335446aa9c4b834db0ada44cc7f73b87be625c refs/remotes/origin/8-teddy-test-2
+ffaa4c4158f623ccaf117a9a8284b773d0936be2 refs/remotes/origin/9-hello-world-and-other-setup
+bb07cb445cb8a6a22a6e96508bc4c9941ea96563 refs/remotes/origin/AI-search-bar
+5d84fa1de373521afae6ff9fbe6394439b4f08e1 refs/remotes/origin/main
+3fd53419e74d0f3438d1da500b5d7f359d9b1a1c refs/remotes/origin/mariatest
