@@ -1,19 +1,27 @@
 #helper functions for the search courses page 
 
-def search_courses(courses, search_text, dept, curr_offered, core_req):
+def search_courses(courses, search_text, dept, curr_offered, core_req, search_credit):
     return_courses = []
+    secondary_courses = []
     for course in courses:
         #Check Dept and core req
-        if (course.code[0:4] == dept or dept == "Any") and (core_req in course.program_reqs or core_req == "Any"):
+        if (dept in courses[course].code[0:4] or dept == "Depa" or dept == "") and (core_req in courses[course].program_reqs or core_req == "Requirement") \
+            and (search_credit == "Credit" or search_credit == str(courses[course].credits) or courses[course].credits >= 5) and (courses[course].credits > 0):
             #check text
-            if search_text == "" or search_text.casefold() in course.title.casefold() \
-                or search_text.casefold() in course.description.casefold() \
-                or search_text in course.code:
-                return_courses.append(course)
+            if search_text == "" or search_text.casefold() in str(courses[course].title).casefold() \
+                or search_text in courses[course].code:
+                return_courses.append(courses[course])
+            elif search_text.casefold() in courses[course].description.casefold():
+                secondary_courses.append(courses[course])
+    
+    return_courses = return_courses + secondary_courses
+    
+    if len(return_courses) == 0:
+        return_courses, search_text = search_courses(courses, search_text[:-1], dept, curr_offered, core_req, search_credit)
             
 
 
-    return return_courses
+    return return_courses, search_text
 
 
 def find_all_departments():

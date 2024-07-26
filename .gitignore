@@ -3,3 +3,5 @@ __pycache__
 *.pyc
 
 courses_and_embeddings.csv
+
+.env

@@ -1,5 +1,5 @@
 from flask import Blueprint, render_template, url_for, request
-from eagleai.models import profile
+from eagleai.models import Student
 from eagleai.database import sign_up_user
 import bcrypt
 
