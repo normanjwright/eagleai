@@ -276,3 +276,11 @@ width: 90%;
  max-width:1200px;
 }
 
+.popup {
+  color:#000000;
+  font-family: 'Open Sans',sans-serif
+}
+
+.show-white-space {
+  white-space: pre-wrap;
+}
