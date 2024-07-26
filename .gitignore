@@ -5,3 +5,4 @@ __pycache__
 courses_and_embeddings.csv
 
 .env
+.venv/
