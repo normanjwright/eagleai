@@ -50,12 +50,13 @@ def askbaldwin():
     searched_courses = searched_courses[:6]
 
     
-    
+
     return render_template("askbaldwin.html", searched_courses = searched_courses)
 
 @app.route("/profile")
 def profile():
-    return render_template("profile.html")
+    studentname = str(student.firstname) + str(student.lastname)
+    return render_template("profile.html", studentname=studentname)
 
 @app.route("/login")
 def login():
