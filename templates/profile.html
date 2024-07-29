@@ -65,6 +65,77 @@
                 </div>
             </div>
 
+            <div class="container mt-5">
+                <h2>Add Courses</h2>
+                <form id="dynamicForm">
+                    <select name="Semester" id="semester">
+                        <option value="Freshman Fall">Freshman Fall</option>
+                        <option value="Freshman Spring">Freshman Spring</option>
+                        <option value="Freshman Summer">Freshman Summer</option>
+                        <option value="Sophomore Fall">Sophomore Fall</option>
+                        <option value="Sophomore Spring">Sophomore Spring</option>
+                        <option value="Sophomore Summer">Sophomore Summer</option>
+                        <option value="Junior Fall">Junior Fall</option>
+                        <option value="Junior Spring">Junior Spring</option>
+                        <option value="Junior Summer">Junior Summer</option>
+                        <option value="Senior Fall">Senior Fall</option>
+                        <option value="Senior Spring">Senior Spring</option>
+                      </select>
+
+                    <div class="form-group">
+                        <label for="item1">Course 1:</label>
+                        <select id="courseDept" name="courseDept" onchange="updateCourses()" class="form-select mx-2" style="max-height: 70vh; overflow:scroll;max-width:125px;">
+                            <option selected>Department</option>
+                            {% for dept in departments %}
+                                <option>{{ dept }}</option>
+                            {% endfor %}
+                        </select>
+                        <select id="courseList" name="courseList" class="form-select mx-2" style="max-height: 70vh; overflow:scroll;max-width:125px;">
+                            <option selected>Course</option>
+                        </select>
+                    </div>
+                    <button type="button" class="btn btn-primary" onclick="addItem()">Add More</button>
+                    <button type="submit" class="btn btn-success">Update</button>
+                </form>
+            </div>
+
+            
+            <script>
+                let itemCount = 1;
+            
+                function addItem() {
+                    itemCount++;
+                    const form = document.getElementById('dynamicForm');
+                    const newItem = document.createElement('div');
+                    newItem.className = 'form-group';
+                    newItem.innerHTML = `
+                        <label for="item${itemCount}">Item ${itemCount}:</label>
+                        <input type="text" class="form-control" id="item${itemCount}" name="items[]">
+                    `;
+                    form.insertBefore(newItem, form.lastElementChild.previousElementSibling);
+                }
+
+                function updateCourses() {
+                    const department = document.getElementById('courseDept').value;
+                    const courseList = document.getElementById('courseList');
+                    courseList.innerHTML = '<option selected>Loading...</option>';
+
+                    fetch(`/get_courses/${department}`)
+                        .then(response => response.json())
+                        .then(data => {
+                            courseList.innerHTML = '<option selected>Course</option>';
+                            data.forEach(course => {
+                                const option = document.createElement('option');
+                                option.value = course;
+                                option.textContent = course;
+                                courseList.appendChild(option);
+                            });
+                        });
+                }
+            </script>
+
+
+
             <div class="bottom-container">
                 <div class="bottom-box">
                     <h3>Freshman Year</h3>
