@@ -46,8 +46,17 @@ def askbaldwin():
 
 @app.route("/profile")
 def profile():
-    studentname = str(student.firstname) + str(student.lastname)
-    return render_template("profile.html", studentname=studentname)
+    studentname = str(student.firstname) + " " + str(student.lastname)
+    return render_template("profile.html", studentname=studentname, departments=departments)
+
+@app.route('/get_courses/<department>', methods=['GET'])
+def get_courses(department):
+    profileCourses = []
+    for course in courses:
+        if (department[0:4] in course):
+            profileCourses.append(str(course) + ": " + str(courses[course].title))
+    return jsonify(profileCourses)
+
 
 @app.route("/login")
 def login():
