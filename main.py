@@ -23,7 +23,7 @@ def coursesearch():
             search_cred = request.form['searchCredit']
 
     
-    searched_courses = search_courses(courses, str(search_text), str(search_dept[0:4]) ,offering, search_req, search_cred)
+    searched_courses, search_text = search_courses(courses, str(search_text), str(search_dept[0:4]) ,offering, search_req, search_cred)
     page = request.args.get('page', 1, type=int)
     per_page = 20
     start = (page - 1) * per_page
@@ -32,8 +32,9 @@ def coursesearch():
 
     items_on_page = searched_courses[start:end]
 
-    return render_template("coursesearch.html", items_on_page = items_on_page, total_pages = total_pages, page = page, departments=departments, \
-                           search_text=search_text, search_dept=search_dept, requirements=requirements, search_req=search_req, search_cred=search_cred)
+    return render_template("coursesearch.html", items_on_page = items_on_page, total_pages = total_pages, page = page , departments=departments, \
+                           search_text=search_text, search_dept=search_dept, requirements=requirements, \
+                            search_req=search_req, search_cred=search_cred, num_courses=len(searched_courses))
 
 @app.route("/askbaldwin")
 def askbaldwin():

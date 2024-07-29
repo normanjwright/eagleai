@@ -14,7 +14,7 @@ def search_courses(courses, search_text, dept, curr_offered, core_req, search_cr
             
 
 
-    return return_courses
+    return return_courses, search_text
 
 
 def find_all_departments():
