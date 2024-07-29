@@ -1,4 +1,6 @@
 from openai import OpenAI
+from profileStructure import createStudent
+from loadclasses import get_all_courses
 import os
 
 client = OpenAI(api_key=os.environ['OPENAI_API_KEY'])
@@ -27,8 +29,38 @@ def boost_card(student, course):
     class_credit = course.credits
     class_prereqs = course.prerequisites
 
-    student_year = student.grad
-    student_school = student.year
+    school = student.school
+    majors = student.major
+    minors = student.minor
+    academic_record = student.academic_record
+    curr_year = student.curr_year
+    add_credit = student.add_credit
+    qual_data = student.qual_data
+
+    # Here we take the list of their majors and turn that into a single string
+    major_string = ""
+    for major in majors:
+        major_string = major_string + major + " and "
+    major_string = major_string[:-5]
+    
+    # Repeat for minors
+    minor_string = ""
+    for minor in minors:
+        minor_string = minor_string + minor + " and "
+    minor_string = minor_string[:-5]
+
+    # Here we turn their academic record into a string
+    ad_string = ""
+    for sem in academic_record:
+        if len(academic_record[sem]) > 0:
+            temp_str = f"{sem}: "
+            for prev_class in academic_record[sem]:
+                temp_str = temp_str + f"{prev_class}, "
+            temp_str = temp_str[:-2]
+            ad_string = ad_string + temp_str + "\n"
+
+
+
 
     # Set system message to help set appropriate tone and context for model
     system_message = f"""
@@ -56,17 +88,18 @@ def boost_card(student, course):
             Prerequisites: {class_prereqs}
             Credit: {class_credit}
 
+
+
             ## Student Information
-            Year: {student_year}
-            Semester: 1
-            School: Morissey College of Arts and Sciences
-            Program: Bachelor of Science in Computer Science
+            Year: {curr_year}
+            School: {school}
+            Majors:{major_string}
+            Minors: {minor_string}
             
 
             ## Student Previous Courses
-            -these will be organized by semester and year.
+            {ad_string}
 
-            No previous courses
         
         """
 
@@ -80,7 +113,24 @@ def boost_card(student, course):
         {"role": "system", "content": system_message},
         {"role": "user", "content": f"{delimiter}{input}{delimiter}"},
     ]
-
     final_response = get_completion_from_messages(messages)
     return final_response
 
+
+
+# Testing part: mocked for me after one semester at BC, no qual data yet
+
+student = createStudent("Owen", "S",\
+            "Morissey College of Arts and Science", \
+            ["Computer Science", "Music"], ["Finance", "Mathematics"], \
+            {"Freshman Fall": ["CSCI1101: Computer Science 1", "MATH1120: Calculus 2", \
+                                "PHYS1101: Introduction to Physics 1", "SPAN1101: Elementary Spanish 1",\
+                                    "ENGL1110: Literature Core"], \
+                                        "Freshman Spring": [], "Freshman Summer": [],\
+                "Sophomore Fall": [], "Sophomore Spring": [], "Sophomore Summer": [],\
+                "Junior Fall": [], "Junior Spring": [], "Junior Summer": [],\
+                "Senior Fall": [], "Senior Spring": [],},\
+            "Freshman", ["MATH1102: Calculus (Mathematics/Science Majors)"], "")
+
+#courses, departments = get_all_courses()
+#print(boost_card(student, courses["MUSA1100"]))

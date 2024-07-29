@@ -66,22 +66,36 @@
       </div>
 
       {% if search_text != "" %}
-            <div class="aisearchbar">Searched: {{ search_text }}</div>
+            <div class="aisearchbar">Search term: {{ search_text }}</div>
       {% endif %}
+      <div class="aisearchbar my-1">Number of Courses Found: {{ num_courses }}</div>
 
     <div class="container-fluid">
         <div class="row mt-3 mx-5">
+
+
+    <!-- Loading Indicator Modal -->
+<div class="modal fade" id="loadingModal" tabindex="-1" aria-labelledby="loadingModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-sm">
+      <div class="modal-content">
+        <div class="modal-body text-center">
+          <div class="spinner-border text-primary my-2" role="status">
+            <span class="visually-hidden popup">Generating AI Baldwin Reponse...</span>
+          </div>
+          <img src="./static/eagleAI.png" width="200" height="200" alt="EagleAI Mascot logo">
+          <p class="popup my-2">Please wait, this may take a second.</p>
+        </div>
+      </div>
+    </div>
+  </div>
             
     <!-- Here is where we can output the formatted cards. Inside we include the modal window(more info option)-->
     {% for course in items_on_page %}
     <div class="col-6 mb-4 mx-auto">
         
-    <div class="card border-secondary my-2 w-200" >
+    <div class="card border-secondary my-2 w-200 h-100" >
         <div class="card-header">
             <div class="row">
-                <div class="col-12">
-                    <h4 class="card-title my-auto">{{ course.code }}: {{ course.title }}</h4>
-                </div>
                 <div class="col-5 my-auto">
                     Class Code: {{course.code}}
                 </div>
@@ -95,13 +109,92 @@
                     Prerequisites: {{ course.prerequisites }}
                 </div>
             </div>
+            <h4 class="card-title my-auto"> {{course.code}}: {{ course.title }}</h4>
         </div>
         <div class="card-body text-secondary">
-          <h4 class="card-title">{{ course.title }}</h4>
-          <p class="card-text">{{ course.description }}</p>
+          
+          <p class="card-text">{{ course.description|truncate(300) }}</p>
         </div>
+
+        <button type="button" class="btn-red btn" onclick="fetchCourseInfo('{{ course.code }}', '#modal{{ loop.index }}')">
+
+            More Info
+          </button>
+
     </div>
     </div>
+
+    <div class="modal fade" id="modal{{ loop.index }}" tabindex="-1" aria-labelledby="exampleModalLabel{{ loop.index }}" aria-hidden="true">
+        <div class="modal-dialog modal-xl">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h4 class="modal-title fs-5 my-auto" id="exampleModalLabel{{ loop.index }}"> {{ course.title }}</h1>
+
+              <button type="button" class="btn-close btn-red" data-bs-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-5 my-auto">
+                        Class Code: {{course.code}}
+                    </div>
+                    <div class="col-7 my-auto">
+                        Program Reqs: {{ course.program_reqs }}
+                    </div>
+                    <div class="col-5 my-auto">
+                        Credits: {{ course.credits }}
+                    </div>
+                    <div class="col-7 my-auto">
+                        Prerequisites: {{ course.prerequisites }}
+                    </div>
+                </div>
+                <hr/>
+                <div class="row">
+                    <div class="col 5 mx-3">
+                        {{ course.description}}
+                    </div>
+                </div>
+                <hr/>
+              
+                <div class="row">
+                <div class="col 5 mx-3 show-white-space" id="additional_info">
+                </div>
+            </div>
+
+            </div>
+            
+          </div>
+        </div>
+      </div>
+
+
+      <script>
+            
+            function fetchCourseInfo(courseId, modalId) {
+                
+                $('#loadingModal').modal('show');
+                
+                $.ajax({
+                    url: '/boost',
+                    method: 'POST',
+                    data: JSON.stringify({ course_id: courseId }),
+                    contentType: 'application/json',
+                    success: function(data) {
+                        $('#loadingModal').modal('hide');
+
+                        // Find the specific modal and update its content
+                        var modal = $(modalId);
+                        modal.find('#additional_info').text(data.additional_info);
+                        modal.modal('show');
+                    },
+                    error: function(xhr, status, error) {
+                        $('#loadingModal').modal('hide');
+                        console.error('Error fetching course data:', error);
+                    }
+                });
+            }
+    </script>
+
 
     {% endfor %}
     {% if page > 1 %}
@@ -113,6 +206,10 @@
     {% endif %}
     </div>
     </div>
+
+    
+
         
+ 
 
 {% endblock %}

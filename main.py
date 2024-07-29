@@ -1,6 +1,7 @@
-from flask import Flask, render_template, url_for, request
+from flask import Flask, render_template, url_for, request, jsonify
 from loadclasses import get_all_courses
 from searchcourses import search_courses, find_all_reqs
+from boost import boost_card, createStudent
 
 app = Flask(__name__)
 
@@ -8,7 +9,7 @@ app = Flask(__name__)
 def home():
     return render_template("home.html")
     
-@app.route("/coursesearch", methods=['GET', 'POST'])
+@app.route("/coursesearch")
 def coursesearch():
     offering = True
     search_text = ""
@@ -24,6 +25,7 @@ def coursesearch():
 
     
     searched_courses, search_text = search_courses(courses, str(search_text), str(search_dept[0:4]) ,offering, search_req, search_cred)
+
     page = request.args.get('page', 1, type=int)
     per_page = 20
     start = (page - 1) * per_page
@@ -38,15 +40,38 @@ def coursesearch():
 
 @app.route("/askbaldwin")
 def askbaldwin():
-    return render_template("askbaldwin.html")
+    offering = True
+    search_text = ""
+    search_dept = "Department"
+    search_req = "Requirement"
+    search_cred = "Credit"
+    searched_courses, search_text = search_courses(courses, str(search_text), str(search_dept[0:4]), offering, search_req, search_cred)
+    searched_courses = searched_courses[:6]
+
+    
+
+    return render_template("askbaldwin.html", searched_courses = searched_courses)
 
 @app.route("/profile")
 def profile():
-    return render_template("profile.html")
+    studentname = str(student.firstname) + " " + str(student.lastname)
+    return render_template("profile.html", studentname=studentname, departments=departments)
+
+@app.route('/get_courses/<department>', methods=['GET'])
+def get_courses(department):
+    profileCourses = []
+    for course in courses:
+        if (department[0:4] in course):
+            profileCourses.append(str(course) + ": " + str(courses[course].title))
+    return jsonify(profileCourses)
+
 
 @app.route("/login")
 def login():
     return render_template("login.html")
+
+
+
 
 # Here we reference the function in load classes, 
 # where courses is a list of objects of the type ApiCourse which is also defined there
@@ -56,6 +81,18 @@ requirements = reqs = ["Major Requirements", "Minor Requirements", "Arts", "Cult
             "Literature", "Mathematics", "Natural Science", "Philosophy","Social Science", "Theology", "Writing" ]
 
 print(departments[0])
+
+student = createStudent("Owen", "S",\
+            "Morissey College of Arts and Science", \
+            ["Computer Science", "Music"], ["Finance", "Mathematics"], \
+            {"Freshman Fall": ["CSCI1101: Computer Science 1", "MATH1120: Calculus 2", \
+                                "PHYS1101: Introduction to Physics 1", "SPAN1101: Elementary Spanish 1",\
+                                    "ENGL1110: Literature Core"], \
+                                        "Freshman Spring": [], "Freshman Summer": [],\
+                "Sophomore Fall": [], "Sophomore Spring": [], "Sophomore Summer": [],\
+                "Junior Fall": [], "Junior Spring": [], "Junior Summer": [],\
+                "Senior Fall": [], "Senior Spring": [],},\
+            "Freshman", ["MATH1102: Calculus (Mathematics/Science Majors)"], "")
 
 
 

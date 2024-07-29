@@ -16,6 +16,12 @@
     font-family: 'Open Sans',sans-serif;
     color: #333;
   }
+  h5 {
+    font-weight: bold;
+    font-family: 'Open Sans',sans-serif;
+    color: #333;
+    font-size: 17px;
+  }
 
   h3 {
     margin: auto;
@@ -270,3 +276,46 @@ button:hover {
 
 
 
+
+.modal-xl {
+width: 90%;
+ max-width:1200px;
+}
+
+.popup {
+  color:#000000;
+  font-family: 'Open Sans',sans-serif
+}
+
+.show-white-space {
+  white-space: pre-wrap;
+}
+
+.small-card {
+  width: 85% !important;  /* Ensures the card takes 75% of the container's width */
+  margin: auto;           /* Centers the card horizontally */
+}
+
+.small-card-body {
+  padding: 10px;  /* Adjust this value to control the padding inside the card body */
+  margin: 0;      /* Ensures no additional margin is added */
+}
+
+.chat-input-container {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 50%;
+  padding: 30px;
+  border-top: 1px solid #dee2e6;
+}
+
+.rounded-input-group .form-control {
+  border-top-left-radius: 18px;
+  border-bottom-left-radius: 18px;
+}
+
+.rounded-input-group .btn {
+  border-top-right-radius: 18px;
+  border-bottom-right-radius: 18px;
+}

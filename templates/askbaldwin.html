@@ -1,5 +1,123 @@
 {% extends 'base.html' %} 
 {% block title %}Ask Baldwin{% endblock %} 
 {% block content %} 
-    <div class="container-fluid" style="background-color: 8a100b;">Ask Baldwin</p>
+    <div class="container-fluid" style="background-color: 8a100b;">
+        <div class="row">
+            <!-- Left Side for chat-->
+            <div class="col-6 mx-auto">
+                <h3>What courses are you looking for?</h3>
+                <div class="chat-input-container">
+                    <form class="input-group rounded-input-group">
+                        <input type="text" class="form-control" placeholder="Ask AI Baldwin a question">
+                        <div class="input-group-append">
+                            <button class="btn btn-red" type="button">Send</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <div class="vr"></div>
+            <!-- Right Side for classes-->
+            <div class="col-6 mx-auto text-center">
+                <h3 class="mx-auto text-center">Classes</h3>
+                <div class="row">
+                
+                    {% for course in searched_courses %}
+    <div class="col-6 mb-2 mx-auto">
+        
+    <div class="card border-secondary my-2 w-100 h-100" >
+        <div class="card-header">
+            <h5 class="card-title my-auto"> {{course.code}}: {{ course.title }}</h5>
+        </div>
+        <div class="card-body text-secondary small-card-body">
+          
+          <p class="card-text my-1">{{ course.description|truncate(90) }}</p>
+        </div>
+
+        <button type="button" class="btn-red btn" onclick="fetchCourseInfo('{{ course.code }}', '#modal{{ loop.index }}')">
+
+            More Info
+          </button>
+
+    </div>
+    </div>
+
+    <div class="modal fade" id="modal{{ loop.index }}" tabindex="-1" aria-labelledby="exampleModalLabel{{ loop.index }}" aria-hidden="true">
+        <div class="modal-dialog modal-xl">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h4 class="modal-title fs-5 my-auto" id="exampleModalLabel{{ loop.index }}"> {{ course.title }}</h1>
+
+              <button type="button" class="btn-close btn-red" data-bs-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-5 my-auto">
+                        Class Code: {{course.code}}
+                    </div>
+                    <div class="col-7 my-auto">
+                        Program Reqs: {{ course.program_reqs }}
+                    </div>
+                    <div class="col-5 my-auto">
+                        Credits: {{ course.credits }}
+                    </div>
+                    <div class="col-7 my-auto">
+                        Prerequisites: {{ course.prerequisites }}
+                    </div>
+                </div>
+                <hr/>
+                <div class="row">
+                    <div class="col 5 mx-3">
+                        {{ course.description}}
+                    </div>
+                </div>
+                <hr/>
+              
+                <div class="row">
+                <div class="col 5 mx-3 show-white-space" id="additional_info">
+                </div>
+            </div>
+
+            </div>
+            
+          </div>
+        </div>
+      </div>
+
+
+      <script>
+            
+            function fetchCourseInfo(courseId, modalId) {
+                
+                $('#loadingModal').modal('show');
+                
+                $.ajax({
+                    url: '/boost',
+                    method: 'POST',
+                    data: JSON.stringify({ course_id: courseId }),
+                    contentType: 'application/json',
+                    success: function(data) {
+                        $('#loadingModal').modal('hide');
+
+                        // Find the specific modal and update its content
+                        var modal = $(modalId);
+                        modal.find('#additional_info').text(data.additional_info);
+                        modal.modal('show');
+                    },
+                    error: function(xhr, status, error) {
+                        $('#loadingModal').modal('hide');
+                        console.error('Error fetching course data:', error);
+                    }
+                });
+            }
+    </script>
+
+
+    {% endfor %}
+    <div class="col-6 mb-2 mx-auto"></div>
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock %}
