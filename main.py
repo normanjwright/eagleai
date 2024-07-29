@@ -41,7 +41,17 @@ def boost():
 
 @app.route("/askbaldwin")
 def askbaldwin():
-    return render_template("askbaldwin.html")
+    offering = True
+    search_text = ""
+    search_dept = "Department"
+    search_req = "Requirement"
+    search_cred = "Credit"
+    searched_courses, search_text = search_courses(courses, str(search_text), str(search_dept[0:4]), offering, search_req, search_cred)
+    searched_courses = searched_courses[:6]
+
+    
+    
+    return render_template("askbaldwin.html", searched_courses = searched_courses)
 
 @app.route("/profile")
 def profile():
