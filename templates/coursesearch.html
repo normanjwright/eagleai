@@ -90,11 +90,25 @@
   </div>
             
     <!-- Here is where we can output the formatted cards. Inside we include the modal window(more info option)-->
-    {% for course in searched_courses %}
+    {% for course in items_on_page %}
     <div class="col-6 mb-4 mx-auto">
         
     <div class="card border-secondary my-2 w-200 h-100" >
         <div class="card-header">
+            <div class="row">
+                <div class="col-5 my-auto">
+                    Class Code: {{course.code}}
+                </div>
+                <div class="col-7 my-auto">
+                    Program Reqs: {{ course.program_reqs }}
+                </div>
+                <div class="col-5 my-auto">
+                    Credits: {{ course.credits }}
+                </div>
+                <div class="col-7 my-auto">
+                    Prerequisites: {{ course.prerequisites }}
+                </div>
+            </div>
             <h4 class="card-title my-auto"> {{course.code}}: {{ course.title }}</h4>
         </div>
         <div class="card-body text-secondary">
@@ -183,6 +197,13 @@
 
 
     {% endfor %}
+    {% if page > 1 %}
+    <a href="{{ url_for('coursesearch', page=page-1) }}">Previous</a>
+    {% endif %}
+    <span>Page {{page}} of {{total_pages}}</span>
+    {% if page < total_pages %}
+    <a href="{{ url_for('coursesearch', page=page+1) }}">Next</a>
+    {% endif %}
     </div>
     </div>
 
