@@ -6,3 +6,4 @@ Flask-Login
 Flask-PyMongo
 openai
 python-dotenv
+bcrypt
