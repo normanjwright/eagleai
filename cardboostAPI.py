@@ -1,6 +1,6 @@
 from openai import OpenAI
-from profileStructure import createStudent
-from loadclasses import get_all_courses
+from eagleai.models import createStudent
+from courseloadAPI import get_all_courses
 import os
 
 client = OpenAI(api_key=os.environ['OPENAI_API_KEY'])
