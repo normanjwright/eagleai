@@ -1,9 +1,9 @@
 #anything not related to  authenticaton goes here
 #for example the login page will go in auth.py
 from flask import Blueprint, render_template, url_for, request, jsonify
-from searchcourses import search_courses, find_all_reqs
-from loadclasses import get_all_courses
-from boost import boost_card, createStudent
+from coursesearchAPI import search_courses, find_all_reqs
+from courseloadAPI import get_all_courses
+from cardboostAPI import boost_card, createStudent
 
 courses, departments = get_all_courses()
 requirements = reqs = ["Major Requirements", "Minor Requirements", "Arts", "Cultural Diversity", "History I", "History II",\

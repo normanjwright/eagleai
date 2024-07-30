@@ -1,8 +1,8 @@
 from eagleai import create_app
 from flask import Flask, render_template, url_for, request, jsonify
-from loadclasses import get_all_courses
-from searchcourses import search_courses, find_all_reqs
-from boost import boost_card, createStudent
+from courseloadAPI import get_all_courses
+from coursesearchAPI import search_courses, find_all_reqs
+from cardboostAPI import boost_card, createStudent
 
 app = create_app()
 
