@@ -1,3 +1,9 @@
 eagleaiENV/
 __pycache__
 *.pyc
+
+.env
+
+.venv/
+
+courses_and_embeddings.csv
