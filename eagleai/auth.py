@@ -11,16 +11,16 @@ def login():
     # data = request.form.to_dict()
     # print(data)
 
-    # if request.method == "POST":
-    #     eagle_id = request.form.get("eagle_id")
-    #     password = request.form.get("password")
+    if request.method == "POST":
+        eagle_id = request.form.get("eagle_id")
+        password = request.form.get("password")
 
-    #     user = profile.get_from_db(eagle_id)
+        user = profile.get_from_db(eagle_id)
 
-    #     if user and bcrypt.checkpw(password.encode('utf-8'), user['password']):
-    #         return render_template("home.html")
-    #     else:
-    #         flash("User does not exist or password is incorrect", category="error")
+        if user and bcrypt.checkpw(password.encode('utf-8'), user['password']):
+            return render_template("home.html")
+        else:
+            flash("User does not exist or password is incorrect", category="error")
 
     return render_template("login.html")
 

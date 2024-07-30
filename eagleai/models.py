@@ -39,4 +39,3 @@ def createStudent(firstname, lastname, school, major, minor, academic_record, gr
     return student
 
     
-    

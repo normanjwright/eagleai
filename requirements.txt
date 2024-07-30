@@ -2,3 +2,7 @@ Flask
 Werkzeug
 requests==2.31.0
 openai
+Flask-Login
+Flask-PyMongo
+openai
+python-dotenv
