@@ -1,80 +1,10 @@
+from eagleai import create_app
 from flask import Flask, render_template, url_for, request, jsonify
 from loadclasses import get_all_courses
 from searchcourses import search_courses, find_all_reqs
 from boost import boost_card, createStudent
 
-app = Flask(__name__)
-
-@app.route("/", )
-def home():
-    return render_template("home.html")
-    
-@app.route("/coursesearch")
-def coursesearch():
-    offering = True
-    search_text = ""
-    search_dept = "Department"
-    search_req = "Requirement"
-    search_cred = "Credit"
-
-    if request.method == 'POST':
-            search_text = request.form['searchText']
-            search_dept = request.form['searchDept']
-            search_req = request.form['searchReq']
-            search_cred = request.form['searchCredit']
-
-    
-    searched_courses, search_text = search_courses(courses, str(search_text), str(search_dept[0:4]) ,offering, search_req, search_cred)
-
-    page = request.args.get('page', 1, type=int)
-    per_page = 20
-    start = (page - 1) * per_page
-    end = start + per_page
-    total_pages = (len(searched_courses) + per_page - 1) // per_page
-
-    items_on_page = searched_courses[start:end]
-
-    return render_template("coursesearch.html", items_on_page = items_on_page, total_pages = total_pages, page = page , departments=departments, \
-                           search_text=search_text, search_dept=search_dept, requirements=requirements, \
-                            search_req=search_req, search_cred=search_cred, num_courses=len(searched_courses))
-
-@app.route("/askbaldwin")
-def askbaldwin():
-    offering = True
-    search_text = ""
-    search_dept = "Department"
-    search_req = "Requirement"
-    search_cred = "Credit"
-    searched_courses, search_text = search_courses(courses, str(search_text), str(search_dept[0:4]), offering, search_req, search_cred)
-    searched_courses = searched_courses[:6]
-
-    
-
-    return render_template("askbaldwin.html", searched_courses = searched_courses)
-
-@app.route("/profile")
-def profile():
-    studentname = str(student.firstname) + " " + str(student.lastname)
-    return render_template("profile.html", studentname=studentname, departments=departments)
-
-@app.route('/get_courses/<department>', methods=['GET'])
-def get_courses(department):
-    profileCourses = []
-    for course in courses:
-        if (department[0:4] in course):
-            profileCourses.append(str(course) + ": " + str(courses[course].title))
-    return jsonify(profileCourses)
-
-
-@app.route("/login")
-def login():
-    return render_template("login.html")
-
-
-
-
-# Here we reference the function in load classes, 
-# where courses is a list of objects of the type ApiCourse which is also defined there
+app = create_app()
 
 courses, departments = get_all_courses()
 requirements = reqs = ["Major Requirements", "Minor Requirements", "Arts", "Cultural Diversity", "History I", "History II",\
