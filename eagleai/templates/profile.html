@@ -8,55 +8,43 @@
 
             <div class="container">
                 <div class="box">
-                    <h3> {{studentname}}</h3>
-                    <h5>Class Year</h5>
-                    <h5>School at BC</h5>
+                    <h3> {{studentname}} </h3>
+                    <h5> Class Year </h5>
+                    <h5> {{studentsch}} </h5>
                     
                 </div>
                 <div class="box">
                     <h3>Programs</h3>
                     <ul>
-                        <select name="majors" id="majors">
-                            <option value="major">Major 1</option>
-                            <option value="1">MATH</option>
-                            <option value="2">CSCI</option>
-                            <option value="3">MFIN</option>
-                          </select>
-                          <select name="majors" id="majors">
-                            <option value="major">Major 2</option>
-                            <option value="1">MATH</option>
-                            <option value="2">CSCI</option>
-                            <option value="3">MFIN</option>
-                          </select>
-                          <select name="majors" id="majors">
-                            <option value="major">Minor 2</option>
-                            <option value="1">MATH</option>
-                            <option value="2">CSCI</option>
-                            <option value="3">MFIN</option>
-                          </select>
-                          <select name="majors" id="majors">
-                            <option value="major">Minor 2</option>
-                            <option value="1">MATH</option>
-                            <option value="2">CSCI</option>
-                            <option value="3">MFIN</option>
-                          </select>
+                        <h5> Majors: </h5>
+                        {% for major in studentMaj %}
+                            <li>{{ major }}</li>
+                        {% endfor %}
+                        
+                        
+                        <h5 style="margin-top: 20px;">Minors: </h5>
+                        {% for minor in studentMin %}
+                            <li>{{ minor }}</li>
+                        {% endfor %}
                     </ul>
                 </div>
                 <div class="box">
                     <h3>What if?</h3>
                 
-                        <select name="majors" id="majors">
-                            <option value="major">Major</option>
-                            <option value="1">MATH</option>
-                            <option value="2">CSCI</option>
-                            <option value="3">MFIN</option>
-                          </select>
-                          <select name="minors" id="minors">
-                            <option value="major">Minor</option>
-                            <option value="1">MATH</option>
-                            <option value="2">CSCI</option>
-                            <option value="3">MFIN</option>
-                          </select>
+                        <select id="courseDept" name="courseDept" class="form-select mx-2" style="max-height: 70vh; overflow:scroll;max-width:125px;">
+                            <option selected>Major</option>
+                            {% for dept in departments %}
+                                <option>{{ dept }}</option>
+                            {% endfor %}
+                        </select>
+                        
+                        <select id="courseDept" name="courseDept" class="form-select mx-2" style="max-height: 70vh; overflow:scroll;max-width:125px;">
+                            <option selected>Minor</option>
+                            {% for dept in departments %}
+                                <option>{{ dept }}</option>
+                            {% endfor %}
+                        </select>
+
                            
                           <a href="url">Restore Declared Programs</a>
                           <a href="url">Restore Classes Taken</a> 

@@ -319,3 +319,8 @@ width: 90%;
   border-top-right-radius: 18px;
   border-bottom-right-radius: 18px;
 }
+
+.box ul {
+  list-style-type: none;
+  padding: 0;
+}

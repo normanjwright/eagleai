@@ -89,7 +89,10 @@ def askbaldwin():
 @views.route("/profile")
 def profile():
     studentname = str(student.firstname) + " " + str(student.lastname)
-    return render_template("profile.html", studentname=studentname, departments=departments)
+    studentsch = str(student.school)
+    studentMaj = student.major
+    studentMin= student.minor
+    return render_template("profile.html", studentname=studentname, departments=departments, studentsch=studentsch, studentMaj=studentMaj, studentMin= studentMin)
 
 
 @views.route('/get_courses/<department>', methods=['GET'])
