@@ -92,16 +92,22 @@
                 let itemCount = 1;
             
                 function addItem() {
-                    itemCount++;
-                    const form = document.getElementById('dynamicForm');
-                    const newItem = document.createElement('div');
-                    newItem.className = 'form-group';
-                    newItem.innerHTML = `
-                        <label for="item${itemCount}">Item ${itemCount}:</label>
-                        <input type="text" class="form-control" id="item${itemCount}" name="items[]">
-                    `;
-                    form.insertBefore(newItem, form.lastElementChild.previousElementSibling);
-                }
+                    // Clone the template div
+                    let template = document.getElementById('dropdownTemplate');
+                    let clone = template.cloneNode(true);
+
+                    // Update the clone's child elements' IDs and names
+                    let dropdowns = clone.querySelectorAll('select');
+                    dropdowns.forEach(function(dropdown, index) {
+                    // Update the 'id' and 'name' attributes to make them unique
+                        dropdown.id = dropdown.id + '_' + document.querySelectorAll('.form-group').length;
+                        dropdown.name = dropdown.name + '_' + document.querySelectorAll('.form-group').length;
+                    });
+
+                // Append the cloned element to the container
+                document.getElementById('dropdownContainer').appendChild(clone);
+            }
+               
 
                 function updateCourses() {
                     const department = document.getElementById('courseDept').value;
