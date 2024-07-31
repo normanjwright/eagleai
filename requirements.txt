@@ -7,3 +7,7 @@ Flask-PyMongo
 openai
 python-dotenv
 bcrypt
+tiktoken
+pandas
+psycopg2
+pgvector
