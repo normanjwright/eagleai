@@ -71,25 +71,26 @@ def format_courses(courses):
     for course in courses.json():
         prerequisites = None
         prereq_string = None
-        if len(course['prereqTerseTranslations']) > 0:
-            prerequisites = find_prerequisites(course['prereqTerseTranslations'][0]['translation']['formatted'], course['course']['courseCode'])
-            #print(type(prerequisites))
-            prereq_string = prerequisites_as_string(prerequisites)
-        core_req = corereqs_as_string(get_core_reqs(course))
-        formatted.update({str(course['course']['courseCode']): ApiCourse(
-            course['course']['title'],
-            course['course']['courseCode'],
-            course['course']['id'],
-            course['course']['descr']['plain'],
-            course['course']['creditOptionIds'],
-            core_req,
-            prereq_string
-        )})
-        dept = str(course['course']['courseCode'][0:4])
-        if dept not in depts and (course['course']['levelValueId'] == 'kuali.result.value.course.level.UG' or course['course']['levelValueId'] == 'kuali.result.value.course.level.B') :
-            depts.append(dept) 
-            temp = dept + ": " + str(course["subjectArea"]["longName"])
-            depts_long.append(temp)
+        if course['course']['levelValueId'] == 'kuali.result.value.course.level.UG' or course['course']['levelValueId'] == 'kuali.result.value.course.level.B':
+            if len(course['prereqTerseTranslations']) > 0:
+                prerequisites = find_prerequisites(course['prereqTerseTranslations'][0]['translation']['formatted'], course['course']['courseCode'])
+                #print(type(prerequisites))
+                prereq_string = prerequisites_as_string(prerequisites)
+            core_req = corereqs_as_string(get_core_reqs(course))
+            formatted.update({str(course['course']['courseCode']): ApiCourse(
+                course['course']['title'],
+                course['course']['courseCode'],
+                course['course']['id'],
+                course['course']['descr']['plain'],
+                course['course']['creditOptionIds'],
+                core_req,
+                prereq_string
+            )})
+            dept = str(course['course']['courseCode'][0:4])
+            if dept not in depts and (course['course']['levelValueId'] == 'kuali.result.value.course.level.UG' or course['course']['levelValueId'] == 'kuali.result.value.course.level.B') :
+                depts.append(dept) 
+                temp = dept + ": " + str(course["subjectArea"]["longName"])
+                depts_long.append(temp)
     return formatted, depts_long
 
 def get_all_courses():

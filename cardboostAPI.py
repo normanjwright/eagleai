@@ -33,7 +33,7 @@ def boost_card(student, course):
     majors = student.major
     minors = student.minor
     academic_record = student.academic_record
-    curr_year = student.curr_year
+    curr_year = student.grad_year
     add_credit = student.add_credit
     qual_data = student.qual_data
 

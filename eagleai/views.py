@@ -4,6 +4,7 @@ from flask import Blueprint, render_template, url_for, request, jsonify
 from coursesearchAPI import search_courses, find_all_reqs
 from courseloadAPI import get_all_courses
 from cardboostAPI import boost_card, createStudent
+from semanticSearchAPI import semantic_search
 
 courses, departments = get_all_courses()
 requirements = reqs = ["Major Requirements", "Minor Requirements", "Arts", "Cultural Diversity", "History I", "History II",\
@@ -72,16 +73,14 @@ def boost():
     additional_info = "Baldwin Says:\n      " + str(boost_card(student, courses[course_id]))  # Your function to get additional data
     return jsonify({'additional_info': additional_info})
 
-@views.route("/askbaldwin")
+@views.route("/askbaldwin", methods=['GET', 'POST'])
 def askbaldwin():
-    offering = True
-    search_text = ""
-    search_dept = "Department"
-    search_req = "Requirement"
-    search_cred = "Credit"
-    searched_courses, search_text = search_courses(courses, str(search_text), str(search_dept[0:4]), offering, search_req, search_cred)
-    searched_courses = searched_courses[:6]
+    input_string = "I want a class for my major, "+ str(student.major)
+    if request.method == 'POST':
+            input_string = request.form['inputString']
 
+
+    searched_courses = semantic_search(input_string, courses)
     
 
     return render_template("askbaldwin.html", searched_courses = searched_courses)
@@ -89,7 +88,10 @@ def askbaldwin():
 @views.route("/profile")
 def profile():
     studentname = str(student.firstname) + " " + str(student.lastname)
-    return render_template("profile.html", studentname=studentname, departments=departments)
+    studentsch = str(student.school)
+    studentMaj = student.major
+    studentMin= student.minor
+    return render_template("profile.html", studentname=studentname, departments=departments, studentsch=studentsch, studentMaj=studentMaj, studentMin= studentMin)
 
 
 @views.route('/get_courses/<department>', methods=['GET'])
