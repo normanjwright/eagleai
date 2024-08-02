@@ -91,7 +91,7 @@ def boost_card(student, course):
 
 
             ## Student Information
-            Year: {curr_year}
+            Year: {curr_year   }
             School: {school}
             Majors:{major_string}
             Minors: {minor_string}
