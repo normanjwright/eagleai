@@ -21,14 +21,14 @@ def create_table_if_not_exists():
     table_create_command = """
     CREATE TABLE IF NOT EXISTS users (
                 id serial primary key, 
-                eid serial,
+                eid integer,
                 firstname text,
                 lastname text,
                 school text,
                 major text,
                 minor text,
                 academic_record text,
-                grad_year integer,
+                grad_year text,
                 add_credit text,
                 qual_data text
                 );
@@ -42,17 +42,6 @@ def create_table_if_not_exists():
     cur = conn.cursor()
 
 
-student = createStudent(12345678, "Owen", "S",\
-            "Morissey College of Arts and Science", \
-            ["Computer Science", "Music"], ["Finance", "Mathematics"], \
-            {"Freshman Summer":[], "Freshman Fall": ["CSCI1101: Computer Science I", "MATH1103: Calculus II (Mathematics/Science Majors)", \
-                                "PHYS2200: Introductory Physics I (Calculus)", "SPAN1015: Elementary Spanish I",\
-                                    "ENGL1110: First Year Writing Seminar: From Slavery to Mass Incarceration"], \
-                                        "Freshman Spring": [], "Sophomore Summer": [],\
-                "Sophomore Fall": [], "Sophomore Spring": [], "Junior Summer": [],\
-                "Junior Fall": [], "Junior Spring": [], "Senior Summer": [],\
-                "Senior Fall": [], "Senior Spring": [],},\
-            "Freshman", ["MATH1102: Calculus (Mathematics/Science Majors)"], "")
 
 courses, depts = get_all_courses()
 
@@ -85,11 +74,11 @@ def string_to_minors(str):
     return minors
 
 
-def academic_record_to_string(student):
+def academic_record_to_string(ar):
     str = ""
-    for sem in student.academic_record:
+    for sem in ar:
         str = str + sem + ": "
-        for course in student.academic_record[sem]:
+        for course in ar[sem]:
             str = str + " " + course[0:8]
         str = str + "|"
     return str
@@ -122,7 +111,7 @@ def create_student_in_db(student):
     conn = psycopg2.connect(conn_string)
     cur = conn.cursor()
 
-    cur.execute("SELECT * FROM users WHERE eid = %s", student.eid)
+    cur.execute("SELECT * FROM users WHERE eid = %s", (student.eid,))
     existing_student = cur.fetchone()
 
     student_id = 0
@@ -130,10 +119,9 @@ def create_student_in_db(student):
     if existing_student is None:
         # Insert new student
 
-        cur.execute("""
-            INSERT INTO users (eid, firstname, lastname, school, major, minor, 
+        cur.execute("""INSERT INTO users (eid, firstname, lastname, school, major, minor, 
                     academic_record, grad_year, add_credit, qual_data)
-            VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
+            VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
             RETURNING id
         """, (student.eid, student.firstname, student.lastname, student.school, 
               majors_to_string(student.major), minors_to_string(student.minor), academic_record_to_string(student.academic_record),
@@ -147,7 +135,7 @@ def create_student_in_db(student):
     return student_id
 
 
-def udpate(student):
+def udpate_student_in_db(student):
     conn_string = "host='localhost' dbname='CourseEmbeddings' user='newuser' password='password'"
     conn = psycopg2.connect(conn_string)
     cur = conn.cursor()
@@ -188,7 +176,7 @@ def get_student(eagleid):
     cur = conn.cursor()
 
     # Fetch the student data
-    cur.execute("SELECT eid, firstname, lastname, school, major, minor, academic_record, grad_year, add_credit, qual_data FROM users WHERE eid = %s", (eid,))
+    cur.execute("SELECT eid, firstname, lastname, school, major, minor, academic_record, grad_year, add_credit, qual_data FROM users WHERE eid = %s", (eagleid,))
     student_data = cur.fetchone()
 
     cur.close()
@@ -197,8 +185,26 @@ def get_student(eagleid):
     if student_data is not None:
         # Unpack the data and create a Student object
         eid, firstname, lastname, school, major, minor, academic_record, grad_year, add_credit, qual_data = student_data
-        student = createStudent(eid, firstname, lastname, school, string_to_majors(major), string_to_minors(minor), string_to_academic_record(academic_record), grad_year, add_credit, qual_data)
+        student = createStudent(eid, firstname, lastname, school, string_to_majors(major), string_to_minors(minor), string_to_academic_record(academic_record, courses), grad_year, add_credit, qual_data)
+        print("Student found")
         return student
     else:
         print("Student not found.")
         return None
+    
+
+
+
+# Testing
+
+student = createStudent(12345678, "Owen", "S",\
+    "Morissey College of Arts and Science", \
+    ["Computer Science", "Music"], ["Finance", "Mathematics"], \
+    {"Freshman Summer":[], "Freshman Fall": ["CSCI1101: Computer Science I", "MATH1103: Calculus II (Mathematics/Science Majors)", \
+                        "PHYS2200: Introductory Physics I (Calculus)", "SPAN1015: Elementary Spanish I",\
+                            "ENGL1110: First Year Writing Seminar: From Slavery to Mass Incarceration"], \
+                                "Freshman Spring": [], "Sophomore Summer": [],\
+        "Sophomore Fall": [], "Sophomore Spring": [], "Junior Summer": [],\
+        "Junior Fall": [], "Junior Spring": [], "Senior Summer": [],\
+        "Senior Fall": [], "Senior Spring": []},\
+    "Freshman", ["MATH1102: Calculus (Mathematics/Science Majors)"], "")

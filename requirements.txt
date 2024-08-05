@@ -1,4 +1,5 @@
 Flask
+Flask-Session
 Werkzeug
 requests==2.31.0
 openai
