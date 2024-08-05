@@ -12,7 +12,7 @@ requirements = reqs = ["Major Requirements", "Minor Requirements", "Arts", "Cult
 
 print(departments[0])
 
-student = createStudent("Owen", "S",\
+student = createStudent(12345678, "Owen", "S",\
             "Morissey College of Arts and Science", \
             ["Computer Science", "Music"], ["Finance", "Mathematics"], \
             {"Freshman Fall": ["CSCI1101: Computer Science 1", "MATH1120: Calculus 2", \

@@ -120,7 +120,7 @@ def boost_card(student, course):
 
 # Testing part: mocked for me after one semester at BC, no qual data yet
 
-student = createStudent("Owen", "S",\
+student = createStudent(12345678, "Owen", "S",\
             "Morissey College of Arts and Science", \
             ["Computer Science", "Music"], ["Finance", "Mathematics"], \
             {"Freshman Fall": ["CSCI1101: Computer Science 1", "MATH1120: Calculus 2", \

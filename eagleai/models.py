@@ -5,7 +5,8 @@ import bcrypt
 mongo = PyMongo()
 
 class Student(): #change to person or user when migrated
-    def __init__(self, firstname, lastname, school, major, minor, academic_record, grad_year, add_credit, qual_data):
+    def __init__(self, eid,  firstname, lastname, school, major, minor, academic_record, grad_year, add_credit, qual_data):
+        self.eid = eid
         self.firstname = firstname
         self.lastname = lastname
         self.school = school
@@ -34,8 +35,8 @@ class Student(): #change to person or user when migrated
         return mongo.db.profiles.find_one({"firstname": firstname, "lastname": lastname})
     
 
-def createStudent(firstname, lastname, school, major, minor, academic_record, grad_year, add_credit, qual_data):
-    student = Student(firstname, lastname, school, major, minor, academic_record, grad_year, add_credit, qual_data)
+def createStudent(eid, firstname, lastname, school, major, minor, academic_record, grad_year, add_credit, qual_data):
+    student = Student(eid, firstname, lastname, school, major, minor, academic_record, grad_year, add_credit, qual_data)
     return student
 
     
