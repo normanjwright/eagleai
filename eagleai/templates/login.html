@@ -35,35 +35,14 @@
       </div>
 
       <section class="login">
-        <h3 class="">Sign in to continue</h3>
-        <form class="row mx-auto g-3">
+
+        <form action="/login" method="POST" class="mx-auto row g-3">
           <div class="col-auto mx-auto my-1">
-            <input
-              type="text"
-              class="form-control"
-              id="inputUsername"
-              placeholder="Username"
-            />
-          </div>
-          <div class="col-auto mx-auto my-1">
-            <input
-              type="password"
-              class="form-control"
-              id="inputPassword"
-              placeholder="Password"
-            />
-          </div>
-          <div class="col-auto mx-auto my-auto">
-            <button
-              type="submit"
-              class="btn btn-primary mb-3 my-3"
-              style="background-color: #73131d"
-            >
-              Sign In
+            <h3 class="">Sign in to continue</h3>
+            <input type="text" class="form-control" id="eid" placeholder="EagleID" name="eid">
+            <button type="submit" class="nav-link btn btn-primary mb-3 my-3">
+              Fake Login
             </button>
-            <a class="nav-link" href="{{ url_for('views.home') }}"
-              >Fake Login</a
-            >
           </div>
         </form>
       </section>

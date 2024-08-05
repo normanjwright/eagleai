@@ -1,10 +1,12 @@
 #anything not related to  authenticaton goes here
 #for example the login page will go in auth.py
-from flask import Blueprint, render_template, url_for, request, jsonify
+from flask import Blueprint, render_template, url_for, request, jsonify, session, redirect
+from flask_session import Session
 from coursesearchAPI import search_courses, find_all_reqs
 from courseloadAPI import get_all_courses
 from cardboostAPI import boost_card, createStudent
 from semanticSearchAPI import semantic_search
+from DAO import get_student, udpate_student_in_db, create_student_in_db 
 
 courses, departments = get_all_courses()
 requirements = reqs = ["Major Requirements", "Minor Requirements", "Arts", "Cultural Diversity", "History I", "History II",\
@@ -12,20 +14,38 @@ requirements = reqs = ["Major Requirements", "Minor Requirements", "Arts", "Cult
 
 print(departments[0])
 
-student = createStudent(12345678, "Owen", "S",\
-            "Morissey College of Arts and Science", \
-            ["Computer Science", "Music"], ["Finance", "Mathematics"], \
-            {"Freshman Fall": ["CSCI1101: Computer Science 1", "MATH1120: Calculus 2", \
-                                "PHYS1101: Introduction to Physics 1", "SPAN1101: Elementary Spanish 1",\
-                                    "ENGL1110: Literature Core"], \
-                                        "Freshman Spring": [], "Freshman Summer": [],\
-                "Sophomore Fall": [], "Sophomore Spring": [], "Sophomore Summer": [],\
-                "Junior Fall": [], "Junior Spring": [], "Junior Summer": [],\
-                "Senior Fall": [], "Senior Spring": [],},\
-            "Freshman", ["MATH1102: Calculus (Mathematics/Science Majors)"], "")
+# student = createStudent(12345678, "Owen", "S",\
+#             "Morissey College of Arts and Science", \
+#             ["Computer Science", "Music"], ["Finance", "Mathematics"], \
+#             {"Freshman Fall": ["CSCI1101: Computer Science 1", "MATH1120: Calculus 2", \
+#                                 "PHYS1101: Introduction to Physics 1", "SPAN1101: Elementary Spanish 1",\
+#                                     "ENGL1110: Literature Core"], \
+#                                         "Freshman Spring": [], "Freshman Summer": [],\
+#                 "Sophomore Fall": [], "Sophomore Spring": [], "Sophomore Summer": [],\
+#                 "Junior Fall": [], "Junior Spring": [], "Junior Summer": [],\
+#                 "Senior Fall": [], "Senior Spring": [],},\
+#             "Freshman", ["MATH1102: Calculus (Mathematics/Science Majors)"], "")
 
 
 views = Blueprint('views', __name__)
+
+@views.route("/login", methods=["GET","POST"])
+def login():
+    if request.method == 'POST':
+        if "eid" in request.form:
+            eagleID = int(request.form["eid"])
+            student = get_student(eagleID)
+            session["student"] = student
+            return redirect("/profile")
+        else:
+            print("EagleID not found in form data")
+    return render_template("login.html")
+
+@views.route("/logout")
+def logout():
+    session["student"] = None
+    return redirect("/login")
+
 
 @views.route("/")
 def home():
@@ -33,6 +53,9 @@ def home():
     
 @views.route("/coursesearch", methods=['GET', 'POST'])
 def coursesearch():
+    if not session.get("student"):
+        # if not there in the session then redirect to the login page
+        return redirect("/login")
     offering = True
     search_text = ""
     search_dept = "Department"
@@ -68,14 +91,20 @@ def coursesearch():
 
 @views.route('/boost', methods=['POST'])
 def boost():
+    if not session.get("student"):
+        # if not there in the session then redirect to the login page
+        return redirect("/login")
     course_id = request.json['course_id']
     print(courses[course_id].title)
-    additional_info = "Baldwin Says:\n      " + str(boost_card(student, courses[course_id]))  # Your function to get additional data
+    additional_info = "Baldwin Says:\n      " + str(boost_card(session["student"], courses[course_id]))  # Your function to get additional data
     return jsonify({'additional_info': additional_info})
 
 @views.route("/askbaldwin", methods=['GET', 'POST'])
 def askbaldwin():
-    input_string = "I want a class for my major, "+ str(student.major)
+    if not session.get("student"):
+        # if not there in the session then redirect to the login page
+        return redirect("/login")
+    input_string = "I want a class for my major, "+ str(session["student"].major)
     if request.method == 'POST':
             input_string = request.form['inputString']
 
@@ -87,15 +116,19 @@ def askbaldwin():
 
 @views.route("/profile")
 def profile():
-    studentname = str(student.firstname) + " " + str(student.lastname)
-    studentsch = str(student.school)
-    studentMaj = student.major
-    studentMin= student.minor
+    if not session.get("student"):
+        # if not there in the session then redirect to the login page
+        return redirect("/login")
+    studentname = str(session["student"].firstname) + " " + str(session["student"].lastname)
+    studentsch = str(session["student"].school)
+    studentMaj = session["student"].major
+    studentMin= session["student"].minor
     return render_template("profile.html", studentname=studentname, departments=departments, studentsch=studentsch, studentMaj=studentMaj, studentMin= studentMin)
 
 
 @views.route('/get_courses/<department>', methods=['GET'])
 def get_courses(department):
+    
     profileCourses = []
     for course in courses:
         if (department[0:4] in course):

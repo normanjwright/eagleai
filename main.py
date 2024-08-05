@@ -1,10 +1,14 @@
 from eagleai import create_app
-from flask import Flask, render_template, url_for, request, jsonify
+from flask import Flask, render_template, url_for, request, jsonify, session
+from flask_session import Session
 from courseloadAPI import get_all_courses
 from coursesearchAPI import search_courses, find_all_reqs
 from cardboostAPI import boost_card, createStudent
 
 app = create_app()
+app.config["SESSION_PERMANENT"] = False
+app.config["SESSION_TYPE"] = "filesystem"
+Session(app)
 
 # courses, departments = get_all_courses()
 # requirements = reqs = ["Major Requirements", "Minor Requirements", "Arts", "Cultural Diversity", "History I", "History II",\
