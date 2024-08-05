@@ -46,6 +46,45 @@ def logout():
     session["student"] = None
     return redirect("/login")
 
+@views.route("/register")
+def register():
+    if request.method == 'POST':
+        eid = request.form["eid"]
+        fname = request.form["fname"]
+        lname = request.form["lname"]
+        school = request.form["school"]
+        major1 = request.form["major1"]
+        major2 = request.form["major2"]
+        minor1 = request.form["minor1"]
+        minor2 = request.form["minor2"]
+        ar = {"Freshman Fall": [], "Freshman Spring": [], "Freshman Summer": [],\
+                 "Sophomore Fall": [], "Sophomore Spring": [], "Sophomore Summer": [],\
+                 "Junior Fall": [], "Junior Spring": [], "Junior Summer": [],\
+                 "Senior Fall": [], "Senior Spring": []}
+        year = request.form["year"]
+        add_credit = []
+        qual = ""
+        major_list = [major1]
+        if major2 != "":
+            major_list.append(major2)
+        minor_list = [minor1]
+        if minor2 != "":
+            minor_list.append(minor2)
+        student = createStudent(eid, fname, lname, school,major_list, minor_list, ar, year, add_credit, qual)
+        if get_student(eid) == None:
+            create_student_in_db(student)
+            session["student"] = student
+            return redirect("/profile")
+        else:
+            student = get_student(eid)
+            session["student"] = student
+            return redirect("/profile")
+        
+    return render_template("register.html")
+            
+
+    return render_template("register.html")
+
 
 @views.route("/")
 def home():
