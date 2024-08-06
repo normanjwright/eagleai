@@ -9,3 +9,5 @@ __pycache__
 courses_and_embeddings.csv
 
 courses.csv
+
+flask_session/
