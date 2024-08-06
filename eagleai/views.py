@@ -171,8 +171,25 @@ def profile():
     studentMin= session["student"].minor
     return render_template("profile.html", studentname=studentname, departments=departments, studentsch=studentsch, studentMaj=studentMaj, studentMin= studentMin, student=session["student"])
 
+@views.route("/delete_course", methods=['GET', 'POST'])
+def delete_course():
+    course = str(request.form.get('course'))
 
-@views.route('/get_courses/<department>', methods=['GET'])
+
+    print(course)
+    
+    for sem in session["student"].academic_record:
+        if course in session["student"].academic_record[sem]:
+            print("test")
+            session["student"].academic_record[sem].remove(course)
+            udpate_student_in_db(session["student"])
+
+        
+    return redirect("/profile")
+
+
+
+@views.route('/get_courses/<department>', methods=['GET', 'POST'])
 def get_courses(department):
     
     profileCourses = []

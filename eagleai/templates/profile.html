@@ -9,7 +9,7 @@
             <div class="container">
                 <div class="box">
                     <h3> {{studentname}} </h3>
-                    <h5> Class Year </h5>
+                    <h5> {{student.grad_year}} </h5>
                     <h5> {{studentsch}} </h5>
                     
                 </div>
@@ -115,6 +115,8 @@
                             });
                         });
                 }
+
+
             </script>
 
 
@@ -124,7 +126,9 @@
                     <h4 class="font-weight-bold">Freshman Year</h3>
                     <h5 class="font-weight-bold">Fall</h5>
                     {% for course in student.academic_record["Freshman Fall"] %}
-                    <p>{{ course }}</p>
+                    <p>{{ course }} 
+                        <button type="button" class="btn-close btn-sm btn-red delete-course" 
+                        data-course="{{ course }}" aria-label="Close">x</button></p>
                     {% endfor %}
                     <h5 class="font-weight-bold">Freshman</h5>
                         {% for course in student.academic_record["Freshman Spring"] %}
@@ -187,5 +191,25 @@
                         {% endfor %}
                 </div>
             </div>
+            <script>
+                $(document).ready(function() {
+                    $(".delete-course").click(function() {
+                        var course = $(this).data("course");
+                        var button = $(this);
+            
+                        $.ajax({
+                            type: "POST",
+                            url: "/delete_course",
+                            data: { course: course },
+                            success: function(response) {
+                                window.location.reload(); // Reload the page to see the updated list
+                            },
+                            error: function(error) {
+                                console.error("Error deleting course:", error);
+                            }
+                        });
+                    });
+                });
+            </script>
     </div>
 {% endblock %}
