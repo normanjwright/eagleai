@@ -208,3 +208,4 @@ student = createStudent(12345678, "Owen", "S",\
         "Junior Fall": [], "Junior Spring": [], "Senior Summer": [],\
         "Senior Fall": [], "Senior Spring": []},\
     "Freshman", ["MATH1102: Calculus (Mathematics/Science Majors)"], "")
+

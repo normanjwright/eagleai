@@ -6,7 +6,7 @@ from coursesearchAPI import search_courses, find_all_reqs
 from courseloadAPI import get_all_courses
 from cardboostAPI import boost_card, createStudent
 from semanticSearchAPI import semantic_search
-from DAO import get_student, udpate_student_in_db, create_student_in_db 
+from DAO import get_student, udpate_student_in_db, create_student_in_db, create_table_if_not_exists()
 
 courses, departments = get_all_courses()
 requirements = reqs = ["Major Requirements", "Minor Requirements", "Arts", "Cultural Diversity", "History I", "History II",\
@@ -49,7 +49,7 @@ def logout():
 @views.route("/register",  methods=["GET","POST"])
 def register():
     if request.method == 'POST':
-        print("the heck")
+        create_table_if_not_exists()
         eid = int(request.form["eid"])
         fname = request.form["fname"]
         lname = request.form["lname"]
@@ -142,7 +142,16 @@ def askbaldwin():
     if not session.get("student"):
         # if not there in the session then redirect to the login page
         return redirect("/login")
-    input_string = "I want a class for my major, "+ str(session["student"].major)
+    degree = ""
+    for major in session["student"].major:
+        degree = degree + str(major) + " and "
+    for minor in session["student"].minor:
+        degree = degree + str(minor) + " and "
+    degree = degree[:-5]
+    print(degree)
+
+
+    input_string = "I want a class for my degrees, "+ degree
     if request.method == 'POST':
             input_string = request.form['inputString']
 
