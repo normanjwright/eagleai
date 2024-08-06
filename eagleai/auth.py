@@ -24,8 +24,8 @@ auth = Blueprint('auth', __name__)
 
 #     return render_template("login.html")
 
-@auth.route("/register", methods=["GET","POST"])
-def register():
-    data = request.form.to_dict()
-    print(data)
-    return render_template("register.html")
+# @auth.route("/register", methods=["GET","POST"])
+# def register():
+#     data = request.form.to_dict()
+#     print(data)
+#     return render_template("register.html")
