@@ -46,10 +46,11 @@ def logout():
     session["student"] = None
     return redirect("/login")
 
-@views.route("/register")
+@views.route("/register",  methods=["GET","POST"])
 def register():
     if request.method == 'POST':
-        eid = request.form["eid"]
+        print("the heck")
+        eid = int(request.form["eid"])
         fname = request.form["fname"]
         lname = request.form["lname"]
         school = request.form["school"]
@@ -72,18 +73,19 @@ def register():
             minor_list.append(minor2)
         student = createStudent(eid, fname, lname, school,major_list, minor_list, ar, year, add_credit, qual)
         if get_student(eid) == None:
+            print("add to db")
             create_student_in_db(student)
             session["student"] = student
             return redirect("/profile")
         else:
+            print("got from db")
             student = get_student(eid)
             session["student"] = student
             return redirect("/profile")
-        
+    print("what")
     return render_template("register.html")
             
 
-    return render_template("register.html")
 
 
 @views.route("/")
