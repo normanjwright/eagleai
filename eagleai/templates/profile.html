@@ -72,16 +72,9 @@
 
                     <div class="form-group">
                         <label for="item1">Course 1:</label>
-                        <select id="courseDept" name="courseDept" onchange="updateCourses()" class="form-select mx-2" style="max-height: 70vh; overflow:scroll;max-width:125px;">
-                            <option selected>Department</option>
-                            {% for dept in departments %}
-                                <option>{{ dept }}</option>
-                            {% endfor %}
-                        </select>
-                        <select id="courseList" name="courseList" class="form-select mx-2" style="max-height: 70vh; overflow:scroll;max-width:125px;">
-                            <option selected disabled>Course</option>
-                            <option selected>Course</option>
-                        </select>
+                        <input type="text" id="course1" name="courses[]" class="form-control mx-2" placeholder="Enter course">
+                       
+                       
                     </div>
                     <button type="button" class="btn btn-primary" onclick="addItem()">Add More</button>
                     <button type="submit" class="btn btn-success">Update</button>
@@ -98,8 +91,8 @@
                     const newItem = document.createElement('div');
                     newItem.className = 'form-group';
                     newItem.innerHTML = `
-                        <label for="item${itemCount}">Item ${itemCount}:</label>
-                        <input type="text" class="form-control" id="item${itemCount}" name="items[]">
+                        <label for="item${itemCount}">Course ${itemCount}:</label>
+                        <input type="text" class="form-control" id="Course${itemCount}" name="items[]">
                     `;
                     form.insertBefore(newItem, form.lastElementChild.previousElementSibling);
                 }
