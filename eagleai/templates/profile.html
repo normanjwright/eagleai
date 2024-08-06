@@ -126,50 +126,70 @@
 
             <div class="bottom-container">
                 <div class="bottom-box">
-                    <h3>Freshman Year</h3>
-                    <h5>Freshman Fall</h5>
+                    <h4 class="font-weight-bold">Freshman Year</h3>
+                    <h5 class="font-weight-bold">Fall</h5>
                     {% for course in student.academic_record["Freshman Fall"] %}
                     <p>{{ course }}</p>
                     {% endfor %}
+                    <h5 class="font-weight-bold">Freshman</h5>
+                        {% for course in student.academic_record["Freshman Spring"] %}
+                        <p>{{ course }}</p>
+                        {% endfor %}
+                    <h5 class="font-weight-bold"> Summer</h5>
+                        {% for course in student.academic_record["Freshman Summer"] %}
+                        <p>{{ course }}</p>
+                        {% endfor %}
                 </div>
             
                 <!-- Button dropdowns -->
 
                 
                 <div class="bottom-box">
-                    <h3>Sophomore Year</h3>
-            
-                    <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">Class 1</button>
-                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                            {% for course in courses %}
-                            <option>{{ course }}</option>
-                            {% endfor %}
-                           
-                        </ul>
+                    <h4 class="font-weight-bold">Sophomore Year</h3>
+                    <h5 class="font-weight-bold">Fall</h5>
+                    {% for course in student.academic_record["Sophomore Fall"] %}
+                    <p>{{ course }}</p>
+                    {% endfor %}
+                    <h5 class="font-weight-bold">Freshman</h5>
+                        {% for course in student.academic_record["Sophomore Spring"] %}
+                        <p>{{ course }}</p>
+                        {% endfor %}
+                    <h5 class="font-weight-bold"> Summer</h5>
+                        {% for course in student.academic_record["Sophomore Summer"] %}
+                        <p>{{ course }}</p>
+                        {% endfor %}
                 </div>
 
 
                 <div class="bottom-box">
-                    <h3>Junior Year</h3>
-                    <button class="btn btn-secondary dropdown-toggle my-1" type="button" data-bs-toggle="dropdown" aria-expanded="false">Class 1</button> <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">Class 2</button>
-                    <button class="btn btn-secondary dropdown-toggle my-1" type="button" data-bs-toggle="dropdown" aria-expanded="false">Class 3</button> <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">Class 4</button>
-                    <button class="btn btn-secondary dropdown-toggle my-1" type="button" data-bs-toggle="dropdown" aria-expanded="false">Class 5</button> <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">Class 6</button>
-                    <hr style="width: 100%;%;text-align:left;margin-left:0">
-                    <button class="btn btn-secondary dropdown-toggle my-1" type="button" data-bs-toggle="dropdown" aria-expanded="false">Class 1</button> <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">Class 2</button>
-                    <button class="btn btn-secondary dropdown-toggle my-1" type="button" data-bs-toggle="dropdown" aria-expanded="false">Class 3</button> <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">Class 4</button>
-                    <button class="btn btn-secondary dropdown-toggle my-1" type="button" data-bs-toggle="dropdown" aria-expanded="false">Class 5</button> <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">Class 6</button>
-                   
+                    <h4 class="font-weight-bold">Junior Year</h3>
+                    <h5 class="font-weight-bold">Fall</h5>
+                    {% for course in student.academic_record["Junior Fall"] %}
+                    <p>{{ course }}</p>
+                    {% endfor %}
+                    <h5 class="font-weight-bold">Freshman</h5>
+                        {% for course in student.academic_record["Junior Spring"] %}
+                        <p>{{ course }}</p>
+                        {% endfor %}
+                    <h5 class="font-weight-bold"> Summer</h5>
+                        {% for course in student.academic_record["Junior Summer"] %}
+                        <p>{{ course }}</p>
+                        {% endfor %}
                 </div>
                 <div class="bottom-box">
-                    <h3>Senior Year</h3>
-                    <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">Class 1</button> <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">Class 2</button>
-                    <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">Class 3</button> <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">Class 4</button>
-                    <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">Class 5</button> <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">Class 6</button>
-                    <hr style="width: 100%;%;text-align:left;margin-left:0">
-                    <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">Class 1</button> <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">Class 2</button>
-                    <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">Class 3</button> <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">Class 4</button>
-                    <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">Class 5</button> <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">Class 6</button>
-
+                    <h4 class="font-weight-bold">Senior Year</h3>
+                    <h5 class="font-weight-bold">Fall</h5>
+                    {% for course in student.academic_record["Senior Fall"] %}
+                    <p>{{ course }}</p>
+                    {% endfor %}
+                    <h5 class="font-weight-bold">Freshman</h5>
+                        {% for course in student.academic_record["Senior Spring"] %}
+                        <p>{{ course }}</p>
+                        {% endfor %}
+                    <h5 class="font-weight-bold"> Summer</h5>
+                        {% for course in student.academic_record["Senior Summer"] %}
+                        <p>{{ course }}</p>
+                        {% endfor %}
                 </div>
             </div>
     </div>
