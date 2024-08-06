@@ -6,7 +6,7 @@ from coursesearchAPI import search_courses, find_all_reqs
 from courseloadAPI import get_all_courses
 from cardboostAPI import boost_card, createStudent
 from semanticSearchAPI import semantic_search
-from DAO import get_student, udpate_student_in_db, create_student_in_db, create_table_if_not_exists()
+from DAO import get_student, udpate_student_in_db, create_student_in_db, create_table_if_not_exists
 
 courses, departments = get_all_courses()
 requirements = reqs = ["Major Requirements", "Minor Requirements", "Arts", "Cultural Diversity", "History I", "History II",\
@@ -150,7 +150,6 @@ def askbaldwin():
     degree = degree[:-5]
     print(degree)
 
-
     input_string = "I want a class for my degrees, "+ degree
     if request.method == 'POST':
             input_string = request.form['inputString']
@@ -170,7 +169,7 @@ def profile():
     studentsch = str(session["student"].school)
     studentMaj = session["student"].major
     studentMin= session["student"].minor
-    return render_template("profile.html", studentname=studentname, departments=departments, studentsch=studentsch, studentMaj=studentMaj, studentMin= studentMin)
+    return render_template("profile.html", studentname=studentname, departments=departments, studentsch=studentsch, studentMaj=studentMaj, studentMin= studentMin, student=session["student"])
 
 
 @views.route('/get_courses/<department>', methods=['GET'])
