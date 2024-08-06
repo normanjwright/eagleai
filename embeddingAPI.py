@@ -271,14 +271,14 @@ def courses_to_database():
 
 
 # Get courses into the csv
-courses_to_csv()
+#courses_to_csv()
 
 
 # Get Embeddings
-embed_courses_to_csv()
+#embed_courses_to_csv()
 
 # Push to Database
-courses_to_database()
+#courses_to_database()
 
 
 

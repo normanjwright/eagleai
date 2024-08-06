@@ -135,7 +135,7 @@ def create_student_in_db(student):
     return student_id
 
 
-def udpate_student_in_db(student):
+def update_student_in_db(student):
     conn_string = "host='localhost' dbname='CourseEmbeddings' user='newuser' password='password'"
     conn = psycopg2.connect(conn_string)
     cur = conn.cursor()

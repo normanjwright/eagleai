@@ -6,7 +6,7 @@ from coursesearchAPI import search_courses, find_all_reqs
 from courseloadAPI import get_all_courses
 from cardboostAPI import boost_card, createStudent
 from semanticSearchAPI import semantic_search
-from DAO import get_student, udpate_student_in_db, create_student_in_db, create_table_if_not_exists
+from DAO import get_student, update_student_in_db, create_student_in_db, create_table_if_not_exists
 
 courses, departments = get_all_courses()
 requirements = reqs = ["Major Requirements", "Minor Requirements", "Arts", "Cultural Diversity", "History I", "History II",\
@@ -182,18 +182,39 @@ def delete_course():
         if course in session["student"].academic_record[sem]:
             print("test")
             session["student"].academic_record[sem].remove(course)
-            udpate_student_in_db(session["student"])
+            update_student_in_db(session["student"])
 
         
     return redirect("/profile")
 
 
 
-@views.route('/get_courses/<department>', methods=['GET', 'POST'])
+@views.route('/get_courses/<department>', methods=['GET'])
 def get_courses(department):
-    
+    print(str(department))
     profileCourses = []
     for course in courses:
         if (department[0:4] in course):
             profileCourses.append(str(course) + ": " + str(courses[course].title))
     return jsonify(profileCourses)
+
+@views.route("/update_courses", methods=['GET', 'POST'])
+def update_courses():
+    semester = request.form.get('Semester')
+    course_lists = request.form.getlist('courseList[]')
+
+    # Process the data
+    # For example, you could save it to the database or perform other operations
+
+    print("Semester:", semester)
+    print("Courses:", course_lists)
+
+    for course in course_lists:
+        if course not in session["student"].academic_record[semester]:
+            session["student"].academic_record[semester].append(course)
+
+    update_student_in_db(session["student"])
+
+    # Redirect or render a template as needed
+    return redirect("/profile")
+
