@@ -77,11 +77,61 @@ def format_courses(courses):
                 #print(type(prerequisites))
                 prereq_string = prerequisites_as_string(prerequisites)
             core_req = corereqs_as_string(get_core_reqs(course))
+
+            desc = course['course']['descr']['plain']
+            if ("&#34;" in desc):
+                desc = desc.replace('&#34;', '"')
+            if ("&#233;" in desc):
+                desc = desc.replace('&#233;', 'é')
+            if ("&#151" in desc):
+                desc = desc.replace('&#151', '-')
+            if ("&#252" in desc):
+                desc = desc.replace('&#252', 'ü')
+            if ("<br>" in desc):
+                desc = desc.replace('<br>', '')
+                desc = desc.replace('</br>', '')
+            if ("</br>" in desc):
+                desc = desc.replace('</br>', '')
+            if ("<br/>" in desc):
+                desc = desc.replace('<br/>', '')
+            if ("&#224;" in desc):
+                desc = desc.replace('&#224;', 'à')
+            if ("<i>" in desc):
+                desc = desc.replace('<i>', '')
+                desc = desc.replace('</i>', '')
+                desc = desc.replace('<i/>', '')
+            if ("<I>" in desc):
+                desc = desc.replace('<I>', '')
+                desc = desc.replace('</I>', '')
+            if ("<P>" in desc):
+                desc = desc.replace('<P>', '')
+                desc = desc.replace('</P>', '')
+            if ("<p>" in desc):
+                desc = desc.replace('<p>', '')
+                desc = desc.replace('</p>', '')
+            if ("<BR>" in desc):
+                desc = desc.replace('<BR>', '')
+                desc = desc.replace('</BR>', '')
+            if ("<b>" in desc):
+                desc = desc.replace('<b>', '')
+                desc = desc.replace('</b>', '') 
+            if ("</i>" in desc):
+                desc = desc.replace('</i>', '')
+
+            title = course['course']['title']
+            if ("<i>" in title):
+                title = title.replace('<i>', '')
+                title = title.replace('</i>', '')
+            if ("<I>" in title):
+                title = title.replace('<I>', '')
+                title = title.replace('</I>', '')
+
+
             formatted.update({str(course['course']['courseCode']): ApiCourse(
-                course['course']['title'],
+                title,
                 course['course']['courseCode'],
                 course['course']['id'],
-                course['course']['descr']['plain'],
+                desc,
                 course['course']['creditOptionIds'],
                 core_req,
                 prereq_string
