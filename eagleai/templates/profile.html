@@ -6,228 +6,298 @@
 
     <div class="container-fluid" >
 
-            <div class="container">
-                <div class="box">
-                    <h3> {{studentname}} </h3>
-                    <h5> {{student.grad_year}} </h5>
-                    <h5> {{studentsch}} </h5>
+            <div class="row">
+                <div class="col-4 mx-auto">
+                    <h2 class="text-left mx-auto">{{studentname}}</h2>
+
+                    <form action="/update_info" method="POST" class=" row g-3">
+                        <div class="col-auto mx-auto my-1">
+                          <select id="school" name="school" class="form-select mx-auto nav-item my-2" style="max-height: 70vh; overflow:scroll;">
+                              <option selected>{{studentsch}}</option>
+                              <option>Morrissey College of Arts and Sciences</option>
+                              <option>Carroll School of Management</option>
+                              <option>Connell School of Nursing</option>
+                              <option>Lynch School of Education and Human Development</option>
+                          </select>
+                          <select id="year" name="year" class="form-select mx-auto nav-item my-2" style="max-height: 70vh; overflow:scroll;max-width:125px;">
+                            <option selected>{{student.grad_year}}</option>
+                            <option>Freshman</option>
+                            <option>Sophomore</option>
+                            <option>Junior</option>
+                            <option>Senior</option>
+                        </select>
+                        <input type="text" class="form-control mx-auto my-2" style="max-width:200px;" id="addmajor" placeholder="Add Major" name="addmajor">
+                        <input type="text" class="form-control mx-auto my-2" style="max-width:200px;" id="addminor" placeholder="Add Minor" name="addminor">
+                          <button type="submit" class="nav-link btn btn-sm btn-primary mx-auto mb-3 my-3">
+                            Update
+                          </button>
+                          
+                        </div>
+                      </form>
                     
                 </div>
-                <div class="box">
-                    <h3>Programs</h3>
+                <div class="col-4">
+                    <h2>Programs</h2>
                     <ul>
-                        <h5> Majors: </h5>
+                        <h4> Majors: </h4>
                         {% for major in studentMaj %}
-                            <li>{{ major }}</li>
+                            <li>
+                                {{ major }} 
+                                <button type="button" class="btn-close btn-sm btn-red delete-degree" 
+                                data-degree="{{ major }}" aria-label="Close">x</button>
+                            </li>
                         {% endfor %}
                         
-                        
-                        <h5 style="margin-top: 20px;">Minors: </h5>
+                        <hr>
+                        <h4 style="margin-top: 20px;">Minors: </h4>
                         {% for minor in studentMin %}
-                            <li>{{ minor }}</li>
+                            <li>{{ minor }} <button type="button" class="btn-close btn-sm btn-red delete-degree" 
+                                data-degree="{{ minor }}" aria-label="Close">x</button></li>
                         {% endfor %}
                     </ul>
                 </div>
-                <div class="box">
-                    <h3>What if?</h3>
-            
-                        <select id="courseDept" name="courseDept" class="form-select mx-2" style="max-height: 70vh; overflow:scroll;max-width:125px;">
-                            <option selected>Major</option>
-                            {% for dept in departments %}
-                                <option>{{ dept }}</option>
-                            {% endfor %}
-                        </select>
+                <div class="col-4">
+                        <h2>Add Courses</h2>
+                        <form id="dynamicForm" method="POST" action="\update_courses">
+                            <select name="Semester" id="semester">
+                                <option value="Freshman Fall">Freshman Fall</option>
+                                <option value="Freshman Spring">Freshman Spring</option>
+                                <option value="Freshman Summer">Freshman Summer</option>
+                                <option value="Sophomore Fall">Sophomore Fall</option>
+                                <option value="Sophomore Spring">Sophomore Spring</option>
+                                <option value="Sophomore Summer">Sophomore Summer</option>
+                                <option value="Junior Fall">Junior Fall</option>
+                                <option value="Junior Spring">Junior Spring</option>
+                                <option value="Junior Summer">Junior Summer</option>
+                                <option value="Senior Fall">Senior Fall</option>
+                                <option value="Senior Spring">Senior Spring</option>
+                              </select>
+        
+                              <div id="coursesContainer">
+                                <div class="form-group" id="courseGroup1">
+                                    <label for="item1">Course 1:</label>
+                                    <select id="courseDeptadd1" name="courseDeptadd[]" onchange="updateCourses(this)" class="form-select mx-2" style="max-height: 70vh; overflow:scroll;max-width:125px;">
+                                        <option selected>Department</option>
+                                        {% for dept in departments %}
+                                            <option>{{ dept }}</option>
+                                        {% endfor %}
+                                    </select>
+                                    <select id="courseList1" name="courseList[]" class="form-select mx-2" style="max-height: 70vh; overflow:scroll;max-width:125px;">
+                                        <option selected disabled>Course</option>
+                                    </select>
+                                </div>
+                            </div>
+                            
+                            <div class="row">
+                            <button type="button" class="btn-red btn btn-primary mx-2" onclick="addItem()">Add More</button>
+                            <button type="submit" class="nav-link btn btn-success mx-2">Update</button>
+                        </div>
+                        </form>
                         
-                        <select id="courseDept" name="courseDept" class="form-select mx-2" style="max-height: 70vh; overflow:scroll;max-width:125px;">
-                            <option selected>Minor</option>
-                            {% for dept in departments %}
-                                <option>{{ dept }}</option>
-                            {% endfor %}
-                        </select>
-
-                           
-                          <a href="url">Restore Declared Programs</a>
-                          <a href="url">Restore Classes Taken</a> 
-                    </div>
+                        <script>
+                            let itemCount = 1;
+                        
+                            function addItem() {
+                                itemCount++;
+                                const container = document.getElementById('coursesContainer');
+                                const newItem = document.createElement('div');
+                                newItem.className = 'form-group';
+                                newItem.id = `courseGroup${itemCount}`;
+                                newItem.innerHTML = `
+                                    <label for="item${itemCount}">Course ${itemCount}:</label>
+                                    <select id="courseDeptadd${itemCount}" name="courseDeptadd[]" onchange="updateCourses(this)" class="form-select mx-2" style="max-height: 70vh; overflow:scroll;max-width:125px;">
+                                        <option selected>Department</option>
+                                        {% for dept in departments %}
+                                            <option>{{ dept }}</option>
+                                        {% endfor %}
+                                    </select>
+                                    <select id="courseList${itemCount}" name="courseList[]" class="form-select mx-2" style="max-height: 70vh; overflow:scroll;max-width:125px;">
+                                        <option selected disabled>Course</option>
+                                    </select>
+                                `;
+                                container.appendChild(newItem);
+                            }
+                        
+                            function updateCourses(selectElement) {
+                                const department = selectElement.value;
+                                const courseList = selectElement.nextElementSibling;
+                                courseList.innerHTML = '<option selected>Loading...</option>';
+                        
+                                fetch(`/get_courses/${department}`)
+                                    .then(response => response.json())
+                                    .then(data => {
+                                        courseList.innerHTML = '<option selected disabled>Course</option>';
+                                        data.forEach(course => {
+                                            const option = document.createElement('option');
+                                            option.value = course;
+                                            option.textContent = course;
+                                            courseList.appendChild(option);
+                                        });
+                                    });
+                            }
+                        </script>
                     
                 </div>
             </div>
 
-            <div class="container mt-5">
-                <h2>Add Courses</h2>
-                <form id="dynamicForm" method="POST" action="\update_courses">
-                    <select name="Semester" id="semester">
-                        <option value="Freshman Fall">Freshman Fall</option>
-                        <option value="Freshman Spring">Freshman Spring</option>
-                        <option value="Freshman Summer">Freshman Summer</option>
-                        <option value="Sophomore Fall">Sophomore Fall</option>
-                        <option value="Sophomore Spring">Sophomore Spring</option>
-                        <option value="Sophomore Summer">Sophomore Summer</option>
-                        <option value="Junior Fall">Junior Fall</option>
-                        <option value="Junior Spring">Junior Spring</option>
-                        <option value="Junior Summer">Junior Summer</option>
-                        <option value="Senior Fall">Senior Fall</option>
-                        <option value="Senior Spring">Senior Spring</option>
-                      </select>
+            <script>
+                $(document).ready(function() {
+                    $(".delete-degree").click(function() {
+                        var degree = $(this).data("degree");
+                        var button = $(this);
+            
+                        $.ajax({
+                            type: "POST",
+                            url: "/delete_degree",
+                            data: { degree: degree },
+                            success: function(response) {
+                                window.location.reload(); // Reload the page to see the updated list
+                            },
+                            error: function(error) {
+                                console.error("Error deleting degree:", error);
+                            }
+                        });
+                    });
+                });
+            </script>
+            <hr>
 
-                      <div id="coursesContainer">
-                        <div class="form-group" id="courseGroup1">
-                            <label for="item1">Course 1:</label>
-                            <select id="courseDeptadd1" name="courseDeptadd[]" onchange="updateCourses(this)" class="form-select mx-2" style="max-height: 70vh; overflow:scroll;max-width:125px;">
-                                <option selected>Department</option>
-                                {% for dept in departments %}
-                                    <option>{{ dept }}</option>
-                                {% endfor %}
-                            </select>
-                            <select id="courseList1" name="courseList[]" class="form-select mx-2" style="max-height: 70vh; overflow:scroll;max-width:125px;">
-                                <option selected disabled>Course</option>
-                            </select>
+            
+
+            <div class="row mx-auto">
+                <h4 class="text-center mx-auto my-3">Father Himes' Three Key Questions</h4>
+                <form action="/update_qual" method="POST" class="g-3 mx-auto">
+                    <div class="row g-3 mb-3">
+                        <div class="col-4">
+                            <label for="question1" class="form-label">What are you passionate about?</label>
+                            <textarea cols="100" class="form-control" id="question1" name="question1" rows="5">{{ q1 }}</textarea>
+                        </div>
+                        <div class="col-md-4">
+                            <label for="question2" class="form-label">What are you good at?</label>
+                            <textarea class="form-control" id="question2" name="question2" rows="5">{{ q2 }}</textarea>
+                        </div>
+                        <div class="col-md-4">
+                            <label for="question3" class="form-label">Who does the world need you to be?</label>
+                            <textarea class="form-control" id="question3" name="question3" rows="5">{{ q3 }}</textarea>
                         </div>
                     </div>
-                
-                    <button type="button" class="btn btn-primary" onclick="addItem()">Add More</button>
-                    <button type="submit" class="btn btn-success">Update</button>
+            
+                    <div class="text-center">
+                        <button type="submit" class="nav-link mx-auto btn btn-primary ">Update</button>
+                    </div>
                 </form>
-                
-                <script>
-                    let itemCount = 1;
-                
-                    function addItem() {
-                        itemCount++;
-                        const container = document.getElementById('coursesContainer');
-                        const newItem = document.createElement('div');
-                        newItem.className = 'form-group';
-                        newItem.id = `courseGroup${itemCount}`;
-                        newItem.innerHTML = `
-                            <label for="item${itemCount}">Course ${itemCount}:</label>
-                            <select id="courseDeptadd${itemCount}" name="courseDeptadd[]" onchange="updateCourses(this)" class="form-select mx-2" style="max-height: 70vh; overflow:scroll;max-width:125px;">
-                                <option selected>Department</option>
-                                {% for dept in departments %}
-                                    <option>{{ dept }}</option>
-                                {% endfor %}
-                            </select>
-                            <select id="courseList${itemCount}" name="courseList[]" class="form-select mx-2" style="max-height: 70vh; overflow:scroll;max-width:125px;">
-                                <option selected disabled>Course</option>
-                            </select>
-                        `;
-                        container.appendChild(newItem);
-                    }
-                
-                    function updateCourses(selectElement) {
-                        const department = selectElement.value;
-                        const courseList = selectElement.nextElementSibling;
-                        courseList.innerHTML = '<option selected>Loading...</option>';
-                
-                        fetch(`/get_courses/${department}`)
-                            .then(response => response.json())
-                            .then(data => {
-                                courseList.innerHTML = '<option selected disabled>Course</option>';
-                                data.forEach(course => {
-                                    const option = document.createElement('option');
-                                    option.value = course;
-                                    option.textContent = course;
-                                    courseList.appendChild(option);
-                                });
-                            });
-                    }
-                </script>
+            </div>
 
-            </div>  
+
 
             <div class="bottom-container">
                 <div class="bottom-box">
-                    <h4 class="font-weight-bold">Freshman Year</h3>
-                    <h5 class="font-weight-bold">Fall</h5>
+                    <h3 class="font-weight-bold year_title">Freshman Year</h3>
+                    <h4 class="font-weight-bold">Fall</h4>
                     {% for course in student.academic_record["Freshman Fall"] %}
                     <p>{{ course }} 
                         <button type="button" class="btn-close btn-sm btn-red delete-course" 
                         data-course="{{ course }}" aria-label="Close">x</button></p>
+                    <hr>
                     {% endfor %}
-                    <h5 class="font-weight-bold">Spring</h5>
+                    <h4 class="font-weight-bold">Spring</h4>
                         {% for course in student.academic_record["Freshman Spring"] %}
                         <p>{{ course }}
                             <button type="button" class="btn-close btn-sm btn-red delete-course" 
                         data-course="{{ course }}" aria-label="Close">x</button></p>
+                        <hr>
                         {% endfor %}
-                    <h5 class="font-weight-bold"> Summer</h5>
+
+                    <h4 class="font-weight-bold"> Summer</h4>
                         {% for course in student.academic_record["Freshman Summer"] %}
                         <p>{{ course }}
                             <button type="button" class="btn-close btn-sm btn-red delete-course" 
                         data-course="{{ course }}" aria-label="Close">x</button>
                         </p>
+                        <hr>
                         {% endfor %}
+
                 </div>
             
                 <!-- Button dropdowns -->
 
                 
                 <div class="bottom-box">
-                    <h4 class="font-weight-bold">Sophomore Year</h3>
-                    <h5 class="font-weight-bold">Fall</h5>
+                    <h3 class="font-weight-bold year_title">Sophomore Year</h3>
+                    <h4 class="font-weight-bold">Fall</h4>
                     {% for course in student.academic_record["Sophomore Fall"] %}
                     <p>{{ course }}
                         <button type="button" class="btn-close btn-sm btn-red delete-course" 
                         data-course="{{ course }}" aria-label="Close">x</button>
                     </p>
+                    <hr>
                     {% endfor %}
-                    <h5 class="font-weight-bold">Spring</h5>
+                    <h4 class="font-weight-bold">Spring</h4>
                         {% for course in student.academic_record["Sophomore Spring"] %}
                         <p>{{ course }}
                             <button type="button" class="btn-close btn-sm btn-red delete-course" 
                         data-course="{{ course }}" aria-label="Close">x</button>
                         </p>
+                        <hr>
                         {% endfor %}
-                    <h5 class="font-weight-bold"> Summer</h5>
+                    <h4 class="font-weight-bold"> Summer</h4>
                         {% for course in student.academic_record["Sophomore Summer"] %}
                         <p>{{ course }}
                             <button type="button" class="btn-close btn-sm btn-red delete-course" 
                         data-course="{{ course }}" aria-label="Close">x</button>
                         </p>
+                        <hr>
                         {% endfor %}
                 </div>
 
 
                 <div class="bottom-box">
-                    <h4 class="font-weight-bold">Junior Year</h3>
-                    <h5 class="font-weight-bold">Fall</h5>
+                    <h3 class="font-weight-bold year_title">Junior Year</h3>
+                    <h4 class="font-weight-bold">Fall</h4>
                     {% for course in student.academic_record["Junior Fall"] %}
                     <p>{{ course }}
                         <button type="button" class="btn-close btn-sm btn-red delete-course" 
                         data-course="{{ course }}" aria-label="Close">x</button>
                     </p>
+                    <hr>
                     {% endfor %}
-                    <h5 class="font-weight-bold">Spring</h5>
+                    <hr>
+                    <h4 class="font-weight-bold">Spring</h4>
                         {% for course in student.academic_record["Junior Spring"] %}
                         <p>{{ course }}
                             <button type="button" class="btn-close btn-sm btn-red delete-course" 
                         data-course="{{ course }}" aria-label="Close">x</button>
+                        <hr>
                         </p>
                         {% endfor %}
-                    <h5 class="font-weight-bold"> Summer</h5>
+                        <hr>
+                    <h4 class="font-weight-bold ">Summer</h4>
                         {% for course in student.academic_record["Junior Summer"] %}
                         <p>{{ course }}
                             <button type="button" class="btn-close btn-sm btn-red delete-course" 
                         data-course="{{ course }}" aria-label="Close">x</button>
                         </p>
                         {% endfor %}
+
                 </div>
                 <div class="bottom-box">
-                    <h4 class="font-weight-bold">Senior Year</h3>
-                    <h5 class="font-weight-bold">Fall</h5>
+                    <h3 class="font-weight-bold year_title">Senior Year</h3>
+                    <h4 class="font-weight-bold">Fall</h4>
                     {% for course in student.academic_record["Senior Fall"] %}
                     <p>{{ course }}
                         <button type="button" class="btn-close btn-sm btn-red delete-course" 
                         data-course="{{ course }}" aria-label="Close">x</button>
                     </p>
+                    <hr>
                     {% endfor %}
-                    <h5 class="font-weight-bold">Spring</h5>
+                    <h4 class="font-weight-bold">Spring</h4>
                         {% for course in student.academic_record["Senior Spring"] %}
                         <p>{{ course }}
                             <button type="button" class="btn-close btn-sm btn-red delete-course" 
                         data-course="{{ course }}" aria-label="Close">x</button>
                         </p>
                         {% endfor %}
-                    <h5 class="font-weight-bold"> Summer</h5>
+                    <h4 class="font-weight-bold"> Summer</h4>
                         {% for course in student.academic_record["Senior Summer"] %}
                         <p>{{ course }}
                             <button type="button" class="btn-close btn-sm btn-red delete-course" 

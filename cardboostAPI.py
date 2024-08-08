@@ -6,11 +6,31 @@ import os
 client = OpenAI(api_key=os.environ['OPENAI_API_KEY'])
 
 
-def get_completion_from_messages(messages, model="gpt-3.5-turbo-0613", temperature=0, max_tokens=1000):
+def get_completion_from_messages(messages, model="gpt-4", temperature=1, max_tokens=1000):
+     # Function to estimate tokens in a string
+    def estimate_token_count(text):
+        return len(text.split())  # Simplified token count estimate
+    
+    # Estimate input tokens
+    input_tokens = sum(estimate_token_count(message['content']) for message in messages)
+   
     response = client.chat.completions.create(model=model,
     messages=messages,
     temperature=temperature, 
     max_tokens=max_tokens)
+
+     # Estimate output tokens
+    output_tokens = estimate_token_count(response.choices[0].message.content)
+    
+    # Calculate costs
+    input_cost = input_tokens * 0.00006
+    output_cost = output_tokens * 0.00003
+    
+    # Calculate the total estimated cost
+    total_estimated_cost = input_cost + output_cost
+    
+    print(f"Estimated cost: ${total_estimated_cost:.2f}")
+    
     return response.choices[0].message.content
 
 #test
@@ -78,7 +98,7 @@ def boost_card(student, course):
             ## Task
             Give some feedback to a student who is reading about {class_name}. The feedback does not have to be all positive. You should not suggest a class if the student is missing any prerequisites.
             For prerequisite checking, check each class one at a time and when the prerequisites are mentioned, put the year it was taken, if it was, in parentheses after. 
-            The students previous courses will be listed by course code and title. Typically freshman at Boston College take either 1000 or 2000 level courses, and upperclassmen tend to have higher level courses.
+            The students previous courses will be listed by course code and title. Mention how the class may connect with the students values only if the course is a good suggestion. Typically freshman at Boston College take either 1000 or 2000 level courses, and upperclassmen tend to have higher level courses.
             Look at the different classes the student as already taken in the previous courses section below, however do not output this process.
 
             ## Class in Question
@@ -95,6 +115,16 @@ def boost_card(student, course):
             School: {school}
             Majors:{major_string}
             Minors: {minor_string}
+
+            ## Student Values
+            Question: What are you passionate about?
+            Student Answer: {qual_data[0]}
+
+            Question: What are you good at?
+            Student Answer: {qual_data[1]}
+
+            Question: Who does the world need you to be?
+            Student Answer: {qual_data[2]}
             
 
             ## Student Previous Courses

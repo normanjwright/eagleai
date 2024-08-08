@@ -64,7 +64,7 @@ def register():
                  "Senior Fall": [], "Senior Spring": []}
         year = request.form["year"]
         add_credit = []
-        qual = ""
+        qual = ["", "", ""]
         major_list = [major1]
         if major2 != "":
             major_list.append(major2)
@@ -169,7 +169,10 @@ def profile():
     studentsch = str(session["student"].school)
     studentMaj = session["student"].major
     studentMin= session["student"].minor
-    return render_template("profile.html", studentname=studentname, departments=departments, studentsch=studentsch, studentMaj=studentMaj, studentMin= studentMin, student=session["student"])
+    q1 = session["student"].qual_data[0]
+    q2 = session["student"].qual_data[1]
+    q3 = session["student"].qual_data[2]
+    return render_template("profile.html", q1=q1, q2=q2, q3=q3, studentname=studentname, departments=departments, studentsch=studentsch, studentMaj=studentMaj, studentMin= studentMin, student=session["student"])
 
 @views.route("/delete_course", methods=['GET', 'POST'])
 def delete_course():
@@ -187,6 +190,22 @@ def delete_course():
         
     return redirect("/profile")
 
+@views.route("/delete_degree", methods=['GET', 'POST'])
+def delete_degree():
+    degree = str(request.form.get('degree'))
+
+
+    print(degree)
+    
+    if degree in session["student"].major:
+        session["student"].major.remove(degree)
+    if degree in session["student"].minor:
+        session["student"].minor.remove(degree)
+
+    update_student_in_db(session["student"])
+        
+    return redirect("/profile")
+
 
 
 @views.route('/get_courses/<department>', methods=['GET'])
@@ -197,6 +216,33 @@ def get_courses(department):
         if (department[0:4] in course):
             profileCourses.append(str(course) + ": " + str(courses[course].title))
     return jsonify(profileCourses)
+
+@views.route("/update_info", methods=['GET', 'POST'])
+def update_info():
+    if request.method == 'POST':
+        school = request.form["school"]
+        major = str(request.form["addmajor"])
+        minor = str(request.form["addminor"])
+        year = request.form["year"]
+
+    # Process the data
+    # For example, you could save it to the database or perform other operations
+
+    if year != "":
+        session["student"].grad_year = year
+    session["student"].school = school
+
+    if major != "":
+        session["student"].major.append(major)
+    
+    if minor != "":
+        session["student"].minor.append(minor)
+
+
+    update_student_in_db(session["student"])
+
+    # Redirect or render a template as needed
+    return redirect("/profile")
 
 @views.route("/update_courses", methods=['GET', 'POST'])
 def update_courses():
@@ -217,4 +263,22 @@ def update_courses():
 
     # Redirect or render a template as needed
     return redirect("/profile")
+
+@views.route("/update_qual", methods=['GET', 'POST'])
+def update_qual():
+    if request.method == 'POST':    
+        q1 = request.form.get('question1')
+        q2 = request.form.get('question2')
+        q3 = request.form.get('question3')
+
+        session["student"].qual_data[0] = q1
+        session["student"].qual_data[1] = q2
+        session["student"].qual_data[2] = q3
+
+        update_student_in_db(session["student"])
+
+    # Redirect or render a template as needed
+    return redirect("/profile")
+
+
 

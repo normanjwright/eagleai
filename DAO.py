@@ -83,6 +83,25 @@ def academic_record_to_string(ar):
         str = str + "|"
     return str
 
+def qual_to_string(qual):
+    str = ""
+    for answer in qual:
+        str = str + answer + "||"
+    str[:-2]
+    return str
+
+def string_to_qual(string):
+    # Split the string using the delimiter '||'
+    if string == "":
+        qual_to_string(["","",""])
+    qual_list = string.split('||')
+    
+    # Remove the last empty string if it exists (due to trailing '||')
+    if qual_list[-1] == '':
+        qual_list.pop()
+    
+    return qual_list
+
 def string_to_academic_record(str, course_list):
     academic_record = {}
     semesters = str.strip('|').split('|')
@@ -125,7 +144,7 @@ def create_student_in_db(student):
             RETURNING id
         """, (student.eid, student.firstname, student.lastname, student.school, 
               majors_to_string(student.major), minors_to_string(student.minor), academic_record_to_string(student.academic_record),
-              student.grad_year, student.add_credit, student.qual_data))
+              student.grad_year, student.add_credit, qual_to_string(student.qual_data)))
         student_id = cur.fetchone()[0]
         conn.commit()
         print(f"Student inserted with ID: {student_id}")
@@ -161,7 +180,7 @@ def update_student_in_db(student):
         """, (student.firstname, student.lastname, student.school, 
               majors_to_string(student.major), minors_to_string(student.minor), 
               academic_record_to_string(student.academic_record), student.grad_year, 
-              student.add_credit, student.qual_data, student.eid))
+              student.add_credit, qual_to_string(student.qual_data), student.eid))
         conn.commit()
         print(f"Student with EID {student.eid} updated.")
     else:
@@ -185,12 +204,15 @@ def get_student(eagleid):
     if student_data is not None:
         # Unpack the data and create a Student object
         eid, firstname, lastname, school, major, minor, academic_record, grad_year, add_credit, qual_data = student_data
-        student = createStudent(eid, firstname, lastname, school, string_to_majors(major), string_to_minors(minor), string_to_academic_record(academic_record, courses), grad_year, add_credit, qual_data)
+        student = createStudent(eid, firstname, lastname, school, string_to_majors(major), string_to_minors(minor), string_to_academic_record(academic_record, courses), grad_year, add_credit, string_to_qual(qual_data))
         print("Student found")
         return student
     else:
         print("Student not found.")
         return None
+    
+
+
     
 
 
